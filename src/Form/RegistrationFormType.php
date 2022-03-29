@@ -3,10 +3,14 @@
 namespace App\Form;
 
 use App\Entity\Participant;
+use App\Entity\Site;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
@@ -18,12 +22,17 @@ class RegistrationFormType extends AbstractType
     {
         $builder
 
-            ->add('Pseudo')
-            ->add('prenom')
+            ->add('pseudo')
+            ->add('email')
             ->add('nom')
-            ->add('email')
+            ->add('prenom')
             ->add('telephone')
-            ->add('email')
+
+            ->add('siteRatache',EntityType::class,[
+                'class'=>Site::class,
+                'choice_label'=>"nom"
+            ])
+
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
@@ -35,6 +44,7 @@ class RegistrationFormType extends AbstractType
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
+                'label'=>'password',
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
@@ -49,6 +59,8 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
+
+            ->add('button', SubmitType::class)
         ;
     }
 

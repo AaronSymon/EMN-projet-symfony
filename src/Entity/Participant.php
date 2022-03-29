@@ -61,12 +61,12 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     private $telephone;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default"=0}))
      */
     private $administrateur;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean" )
      */
     private $actif;
 
