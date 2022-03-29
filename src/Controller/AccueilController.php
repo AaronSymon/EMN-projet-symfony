@@ -12,16 +12,33 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AccueilController extends AbstractController
 {
+    public array $don=[];
+
     /**
      * @Route("/accueil", name="app_accueil")
      */
     public function index(Request $request, SiteRepository $siteRepo): Response
     {
-
+        $data = array();
         $sites = $siteRepo->findAll();
+        $filtre = $this->createFormBuilder($data)->getForm();
+        $filtre->handleRequest($request);
+
+        if ($request->isMethod('POST')) {
+            $data = $filtre->getData();
+            $this->don = $data;
+        }
         return $this->render('accueil/accueil.html.twig', [
-            "sites"=>$sites,
-            "dateNow"=>date("d/m/Y")
+            "sites" => $sites,
+            "dateNow" => date("d/m/Y"),
+            "filtreForm" => $filtre->createView(),
+            "siteC" => $request->request->get('Site'),
+            "dateD" => $request->request->get("dateDebut"),
+            "dateF" => $request->request->get("dateFin"),
+            "ckOrg" => $request->request->get('SortOrg'),
+            "ckIns" => $request->request->get('SortIns'),
+            "ckNon" => $request->request->get('SortNon'),
+            "ckPast" => $request->request->get('SortPast'),
         ]);
     }
 }

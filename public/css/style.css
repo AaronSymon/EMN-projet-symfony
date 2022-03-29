@@ -1,7 +1,16 @@
-.FormFiltre{
-    display: flex;
+#infoNow{
+    text-align: right;
+    margin-right: 50px;
 }
 
+h2{
+    font-size: 25px;
+    margin-left: 50px;
+}
+
+#filtreDiv form{
+    display: flex;
+}
 #checkFilter{
     display: block;
 }
@@ -12,8 +21,32 @@
 
 #LeftFilter{
     width: 500px;
+    padding-left: 50px;
+}
+
+#LeftFilter div{
+    margin-bottom: 5px;
+}
+
+#LeftFilter input[type=search]{
+    border-radius: 10px;
+    padding-left: 10px;
+}
+
+#LeftFilter select{
+    margin-left: 50px;
 }
 
 #checkFilter{
     width: 200px;
+    margin-right: 50px;
+}
+
+#checkFilter label{
+    margin-left: 2px;
+}
+
+#BtnFiltre{
+    width: 150px;
+    height: 100px;
 }
