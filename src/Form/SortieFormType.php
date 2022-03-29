@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Participant;
 use App\Entity\Sortie;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -24,7 +25,6 @@ class SortieFormType extends AbstractType
             ->add('site')
             ->add('etat')
             ->add('SortieLieu')
-            ->add('Organisateur', EntityType::class)
         ;
     }
 
