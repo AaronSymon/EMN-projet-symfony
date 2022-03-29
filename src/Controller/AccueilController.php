@@ -20,7 +20,6 @@ class AccueilController extends AbstractController
         $filtreForm = $this->createForm(FiltreSortieFormType::class,$sortie);
         $filtreForm->handleRequest($request);
 
-
         return $this->render('accueil/accueil.html.twig', [
             "filtreForm"=>$filtreForm->createView(),
             "dateNow"=>date("d/m/Y")
