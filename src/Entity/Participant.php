@@ -110,17 +110,6 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
     public function getEmail(): ?string
     {
         return $this->email;
