@@ -24,9 +24,15 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     private $id;
 
     /**
+     * @ORM\Column(type="string", length=50, unique=true)
+     */
+    private $pseudo;
+
+    /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
+
 
     /**
      * @ORM\Column(type="json")
@@ -90,6 +96,30 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->id;
     }
+
+    public function getPseudo(): ?string
+    {
+        return $this->pseudo;
+    }
+
+    public function setPseudo(string $pseudo): self
+    {
+        $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     public function getEmail(): ?string
     {
