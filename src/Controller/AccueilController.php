@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AccueilController extends AbstractController
 {
-    public array $don=[];
 
     /**
      * @Route("/accueil", name="app_accueil")
@@ -26,7 +25,6 @@ class AccueilController extends AbstractController
 
         if ($request->isMethod('POST')) {
             $data = $filtre->getData();
-            $this->don = $data;
         }
         return $this->render('accueil/accueil.html.twig', [
             "sites" => $sites,
