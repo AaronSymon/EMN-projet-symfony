@@ -4,7 +4,28 @@
 
 {% block main %}
 
-    <h1>MonProfil!</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Titre</th>
+            <th scope="col">Description</th>
+            <th scope="col">Auteur</th>
+            <th scope="col">Date de création</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for wish in wishes %}
+            <tr>
+                <td>{{wish.id}}</td>
+                <td><a href="{{ path('app_wish_detail',{id:wish.id}) }}">{{wish.title}}</a></td>
+                <td>{{wish.description|slice(0,80)}}...</td>
+                <td>{{wish.author}}</td>
+                <td>{{wish.dateCreated|date(" d-m-Y H:i ")}}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
 
 
