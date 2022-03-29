@@ -9,5 +9,40 @@
         <p>Participant : Lefebvre Marc</p></div>
     <div class="Filtres"></div>
 
+    <div id="filtreDiv">
+        <h2>Filtrer les sorties</h2>
+        <form class="FormFiltre">
+            <div id="LeftFilter">
+                <div>
+                    <label for="Site">Site :</label>
+                    <select name="Site" id="SiteSelect">
+                        {% for site in sites %}
+                            <option>{{ site.nom }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <label for="search">Le nom de la sortie contient :</label>
+                    <input type="search" name="search" id="nameSearch">
+                </div>
+                <div>
+                    <label for="dateDebut">Entre</label>
+                    <input type="date" name="dateDebut" id="dateDebut">
+                    <label for="dateFin">et</label>
+                    <input type="date" name="dateFin" id="dateFin">
+                </div>
+            </div>
+            <div id="checkFilter"><ul id="listFiltre">
+
+                    <li><input type="checkbox" name="SortOrg" id="SortOrg"><label for="SortOrg">Sorties organisés</label></li>
+                    <li><input type="checkbox" name="SortIns" id="SortIns"><label for="SortIns">Sorties inscrit.e.s</label></li>
+                    <li><input type="checkbox" name="SortNon" id="SortNon"><label for="SortNon">Sorties non inscrit.e.s</label></li>
+                    <li><input type="checkbox" name="SortPast" id="Sortpast"><label for="SortPast">Sorties passées</label></li>
+
+                </ul></div>
+            <div id="divBtnFiltre">
+                <input type="submit" value="Rechercher"></div>
+        </form>
+    </div>
 
 {% endblock %}

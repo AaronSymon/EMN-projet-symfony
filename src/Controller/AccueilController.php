@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Sortie;
 use App\Form\FiltreSortieFormType;
+use App\Repository\SiteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,14 +15,12 @@ class AccueilController extends AbstractController
     /**
      * @Route("/accueil", name="app_accueil")
      */
-    public function index(Request $request): Response
+    public function index(Request $request, SiteRepository $siteRepo): Response
     {
-        $sortie = new Sortie();
-        $filtreForm = $this->createForm(FiltreSortieFormType::class,$sortie);
-        $filtreForm->handleRequest($request);
 
+        $sites = $siteRepo->findAll();
         return $this->render('accueil/accueil.html.twig', [
-            "filtreForm"=>$filtreForm->createView(),
+            "sites"=>$sites,
             "dateNow"=>date("d/m/Y")
         ]);
     }

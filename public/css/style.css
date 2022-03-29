@@ -1,0 +1,19 @@
+.FormFiltre{
+    display: flex;
+}
+
+#checkFilter{
+    display: block;
+}
+
+#listFiltre{
+    list-style: none;
+}
+
+#LeftFilter{
+    width: 500px;
+}
+
+#checkFilter{
+    width: 200px;
+}
