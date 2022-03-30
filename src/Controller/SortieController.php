@@ -6,16 +6,12 @@ use App\Entity\Sortie;
 use App\Form\SortieFormType;
 use App\Repository\EtatRepository;
 use App\Repository\LieuRepository;
-use App\Repository\ParticipantRepository;
 use App\Repository\SiteRepository;
 use App\Repository\SortieRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use http\Client\Curl\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Security;
 
 class SortieController extends AbstractController
 {
@@ -25,13 +21,14 @@ class SortieController extends AbstractController
     public function afficherSortie(SortieRepository $sortieRepo): Response
     {
 
+
         $sorties = $sortieRepo->findAll();
 
         return $this->render('sortie/listeSorties.html.twig', compact("sorties"));
     }
 
     /**
-     * @Route("/creer-sortie", name="app_sortie_afficher")
+     * @Route("/creer-sortie", name="app_sortie_creer")
      */
     public function creerSortie(LieuRepository $lieuRepo,EtatRepository $etatRepo, SiteRepository $siteRepo,SortieRepository $sortieRepo,Request $request): Response
     {
