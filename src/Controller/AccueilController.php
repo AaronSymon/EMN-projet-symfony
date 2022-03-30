@@ -20,7 +20,7 @@ class AccueilController extends AbstractController
      */
     public function index(Request $request, SiteRepository $siteRepo, SortieRepository $sortieRepo, ParticipantRepository $userRepo): Response
     {
-        $siteC=""; $dateD=""; $dateF=""; $ckOrg="on"; $ckIns="on"; $ckNon="on"; $ckPast=""; $mot="";
+        $siteC=""; $dateD=""; $dateF=""; $ckOrg="on"; $ckIns="on"; $ckNon="on"; $ckPast=""; $mot=""; $sorties=array();
         $data = array();
         $sites = $siteRepo->findAll();
         $filtre = $this->createFormBuilder($data)->getForm();
@@ -36,10 +36,11 @@ class AccueilController extends AbstractController
             $ckIns = $request->request->get('SortIns');
             $ckNon = $request->request->get('SortNon');
             $ckPast = $request->request->get('SortPast');
-
-            $user = $userRepo->find($this->getUser()->getId());
-            $sortieRepo->filtrer($siteC, $mot, $dateD, $dateF, $ckOrg, $ckIns, $ckNon, $ckPast, $user);
         }
+
+        $user = $userRepo->find($this->getUser()->getId());
+        //$sorties = $sortieRepo->filtrer($siteC, $mot, $dateD, $dateF, $ckOrg, $ckIns, $ckNon, $ckPast, $user);
+        $sorties = $sortieRepo->findAll();
         return $this->render('accueil/accueil.html.twig', [
             "sites" => $sites,
             "dateNow" => date("d/m/Y"),
@@ -50,7 +51,8 @@ class AccueilController extends AbstractController
             "ckOrg" => $ckOrg,
             "ckIns" => $ckIns,
             "ckNon" => $ckNon,
-            "ckPast" => $ckPast
+            "ckPast" => $ckPast,
+            "sorties" => $sorties
         ]);
     }
 }

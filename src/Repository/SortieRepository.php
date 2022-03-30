@@ -45,7 +45,7 @@ class SortieRepository extends ServiceEntityRepository
         }
     }
 
-    public function filtrer($site, $mot, $dateDeb, $dateFin, $organisateur, $participateur, $nonparticipant, $past, $user): void
+    public function filtrer($site, $mot, $dateDeb, $dateFin, $organisateur, $participateur, $nonparticipant, $past, $user)
     {
         $querybuild = $this->createQueryBuilder('so')
             ->leftJoin('so.site', 's')
@@ -82,6 +82,8 @@ class SortieRepository extends ServiceEntityRepository
                 ->setParameter("nUser", $user);
         }
 
+        $query = $querybuild->getQuery();
+        return $query->getResult();
 
     }
 
