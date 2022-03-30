@@ -45,8 +45,41 @@ class SortieRepository extends ServiceEntityRepository
         }
     }
 
-    public function filtrer($site, $dateDeb, $dateFin, $organisateur, $participateur, $nonparticipant, $past): void
+    public function filtrer($site, $mot, $dateDeb, $dateFin, $organisateur, $participateur, $nonparticipant, $past, $user): void
     {
+        $querybuild = $this->createQueryBuilder();
+        $querybuild->select('so', 's', 'e')
+            ->from("App\Entity\Sortie",'so')
+            ->leftJoin('so.site', 's')
+            ->leftJoin('so.etat', 'e')
+            ->where("so.nom  LIKE :nom")
+            ->setParameter("nom","%".$mot."%");
+        if($dateDeb!=""){
+            $querybuild->andWhere("so.dateHeureDebut > :dateD")
+                ->setParameter("dateD",$dateDeb);
+        }
+        if($dateFin!=""){
+            $querybuild->andWhere("so.dateHeureDebut < :dateF")
+                ->setParameter("dateF",$dateFin);
+        }
+        if($organisateur=="on"){
+            $querybuild->andWhere("so.organisateur = :user")
+                ->setParameter("user",$user);
+        }
+
+            if($participateur=="on"){
+                $querybuild->andWhere(":pUser MEMBER OF so.participants")
+                    ->setParameter("pUser", $user);
+            }
+//            if($nonparticipant=="on"){
+//                $querybuild->andWhere(":nUser NOT IN so.participants")
+//                    ->setParameter("nUser",$user);
+//            }}
+        if($past=="on"){
+            $querybuild->andWhere("e.libelle = 'passee'");
+            $querybuild->andWhere("so.dateHeureDebut < :mois")
+                ->setParameter("mois",date("d-m-Y", strtotime("-1 month")));
+        }
 
     }
 
