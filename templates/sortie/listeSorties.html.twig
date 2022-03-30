@@ -3,43 +3,43 @@
 {% block title %}Liste de sorties{% endblock %}
 
 {% block main %}
-
     <table class="table">
         <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Date heure de début</th>
-                <th scope="col">duree</th>
-                <th scope="col">Date limite inscription</th>
-                <th scope="col">Nombre inscription max</th>
-                <th scope="col">infos de sortie</th>
-                <th scope="col">participants</th>
-                <th scope="col">organisateur</th>
-                <th scope="col">site</th>
-                <th scope="col">etat</th>
-                <th scope="col">Sortie lieu</th>
-            </tr>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Date heure de début</th>
+            <th scope="col">duree</th>
+            <th scope="col">Date limite inscription</th>
+            <th scope="col">Nombre inscription max</th>
+            <th scope="col">infos de sortie</th>
+            <th scope="col">participants</th>
+            <th scope="col">organisateur</th>
+            <th scope="col">site</th>
+            <th scope="col">etat</th>
+            <th scope="col">Sortie lieu</th>
+        </tr>
         </thead>
         <tbody>
-            {% for sortie in sorties %}
-                <tr>
-                    <td>{{ sortie.id }}</td>
-                    <td>{{ sortie.nom }}</td>
-                    <td>{{ sortie.dateHeureDebut }}</td>
-                    <td>{{ sortie.duree }}</td>
-                    <td>{{ sortie.dateLimiteInscription }}</td>
-                    <td>{{ sortie.nbInscriptionMax }}</td>
-                    <td>{{ sortie.infosSortie }}</td>
-                    <td>{{ sortie.participants }}</td>
-                    <td>{{ sortie.organisateur }}</td>
-                    <td>{{ sortie.site }}</td>
-                    <td>{{ sortie.etat }}</td>
-                    <td>{{ sortie.SortieLieu }}</td>
-                    <td>{{ sortie.Organisateur }}</td>
-                </tr>
+        {% for sortie in sorties %}<tr>
+            <td>{{ sortie.id }}</td>
+            <td>{{ sortie.nom }}</td>
+            <td>{{ sortie.dateHeureDebut|date("d-m-Y") }}</td>
+            <td>{{ sortie.duree }}</td>
+            <td>{{ sortie.dateLimiteInscription|date("d-m-Y") }}</td>
+            <td>{{ sortie.nbInscriptionMax }}</td>
+            <td>{{ sortie.infosSortie }}</td>
+            <td><ul>
+                    {% for participant in sortie.participants %}
+                        <li>{{ participant.pseudo }}</li>
+                    {% endfor %}</ul></td>
+            <td>{{ sortie.organisateur.pseudo }}</td>
+            <td>{{ sortie.site.nom }}</td>
+            <td>{{ sortie.etat.libelle }}</td>
+            <td>{{ sortie.SortieLieu.nom }}</td>
+        </tr>
         </tbody>
-            {% endfor %}
-
+        {% endfor %}
     </table>
 
 {% endblock %}
