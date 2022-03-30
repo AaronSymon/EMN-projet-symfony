@@ -26,6 +26,7 @@ class AccueilController extends AbstractController
         $filtre = $this->createFormBuilder($data)->getForm();
         $filtre->handleRequest($request);
 
+
         if ($request->isMethod('POST')) {
             $siteC = $request->request->get('Site');
             $mot = $request->request->get('nameSearch');

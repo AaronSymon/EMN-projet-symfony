@@ -73,7 +73,6 @@ class SortieRepository extends ServiceEntityRepository
             $querybuild->andWhere("so.organisateur = :user")
                 ->setParameter("user",$user);
         }
-
         if($participateur=="on") {
             $querybuild->andWhere(":pUser MEMBER OF so.participants")
                 ->setParameter("pUser", $user);
