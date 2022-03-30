@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Sortie;
 use App\Form\SortieFormType;
 use App\Repository\EtatRepository;
+use App\Repository\LieuRepository;
 use App\Repository\ParticipantRepository;
 use App\Repository\SiteRepository;
 use App\Repository\SortieRepository;
@@ -32,7 +33,7 @@ class SortieController extends AbstractController
     /**
      * @Route("/creer-sortie", name="app_sortie_afficher")
      */
-    public function creerSortie(EtatRepository $etatRepo, SiteRepository $siteRepo,SortieRepository $sortieRepo,Request $request): Response
+    public function creerSortie(LieuRepository $lieuRepo,EtatRepository $etatRepo, SiteRepository $siteRepo,SortieRepository $sortieRepo,Request $request): Response
     {
 
 
@@ -43,14 +44,15 @@ class SortieController extends AbstractController
         $sortieForm = $this->createForm(SortieFormType::class,$sortie);
         $sortieForm->handleRequest($request);
 
-        dump($etatRepo->find($id=1));
 
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()){
 
-            //definition des valeurs par defauts de Organisateur, site, etat
+            //definition des valeurs par defauts de Organisateur, site, etat, sortieLieu
             $sortie->setOrganisateur($this->getUser());
             $sortie->setSite($siteRepo->find($this->getUser()->getSiteRatache()));
-            $sortie->setEtat($etatRepo->find($id=1)->getId());
+            $sortie->setEtat($etatRepo->find(1));
+            $sortie->setSortieLieu($lieuRepo->find($request->request->get('sortie_form')['SortieLieu']['0']));
+            //$sortie->setSortieLieu($lieuRepo->find($_POST["sortie_form"]["SortieLieu"][0]));
 
             $sortieRepo->add($sortie,true);
 

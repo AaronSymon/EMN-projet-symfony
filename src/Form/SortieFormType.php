@@ -27,7 +27,7 @@ class SortieFormType extends AbstractType
                 'choice_label'=>function(Lieu $lieu){
                 return $lieu->getNom();
                 },
-                'mapped'=>true,
+                'mapped'=>false,
                 'multiple'=>true,
                 'expanded'=>true
             ])
