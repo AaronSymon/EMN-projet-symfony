@@ -74,7 +74,7 @@ class ModifierMonProfilType extends AbstractType
                         'maxMessage' => 'Votre mot de passe doit contenir au maximum {{ limit }} caractères.'
                     ]),
                     new Regex([
-                        'pattern' => "/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[ !\"\#\$%&\'\(\)*+,\-.\/:;<=>?@[\\^\]_`\{|\}~])^.{0,4096}$/",
+                        'pattern' => "/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[ !\"\#\$%&\'\(\)*+,\-.\/:;<=>?@[\\^\]_` _\{|\}~])^.{0,4096}$/",
                         'message' => 'Le mot de passe doit contenir obligatoirement une minuscule, une majuscule, un chiffre et un caractère spécial.',
                     ])
                 ]

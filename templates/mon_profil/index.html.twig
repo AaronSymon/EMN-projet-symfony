@@ -3,12 +3,26 @@
 {% block title %}MonProfil!{% endblock %}
 
 {% block main %}
+    <div class="container">
 
+        <div class="Form offset-3 col-6 offset-3 mt-5">
 
+            <h3>{{ app.user.pseudo }}</h3>
 
+            <label class="col-sm-2 col-form-label">Prenom :</label>
+            <input class="form-control" type="text" value="{{ app.user.prenom}}" aria-label="readonly input example" readonly>
 
+            <label class="col-sm-2 col-form-label">nom :</label>
+            <input class="form-control" type="text" value="{{ app.user.nom}}" aria-label="readonly input example" readonly>
 
+            <label class="col-sm-2 col-form-label">Telephone :</label>
+            <input class="form-control" type="text" value="{{ app.user.telephone}}" aria-label="readonly input example" readonly>
 
+            <label class="col-sm-2 col-form-label">Email :</label>
+            <input class="form-control" type="text" value="{{ app.user.email}}" aria-label="readonly input example" readonly>
 
-
+            <button onclick="location.href = '{{ path('app_modifier') }}';" id="myButton" class="btn btn-success my-3" >Modifier</button>
+            <button onclick="location.href = '{{ path('app_accueil') }}';" id="myButton" class="btn btn-danger my-3" >Retour</button>
+        </div>
+    </div>
 {% endblock %}

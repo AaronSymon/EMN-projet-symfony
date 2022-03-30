@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-
+use Bar\UserInterface;
 
 class MonProfilController extends AbstractController
 {
@@ -21,6 +21,7 @@ class MonProfilController extends AbstractController
     {
         $this->participantRepo = $participantRepo;
     }
+
 
     /**
      * @Route("/mon/profil", name="app_mon_profil")
@@ -49,7 +50,7 @@ class MonProfilController extends AbstractController
 
             $em = $this->getDoctrine()->getManager();
 
-            $newPassword = $form->get('plainPassword')['first']->getData();
+            $newPassword = $form->get("plainPassword")['first']->getData();
 
             // Grâce au service, on génère un nouveau hash de notre nouveau mot de passe
             $hashOfNewPassword = $encoder->encodePassword($user, $newPassword);
@@ -60,7 +61,7 @@ class MonProfilController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', 'Profil modifié avec succès.');
-            return $this->redirectToRoute('profil');
+            return $this->redirectToRoute('app_mon_profil');
         }
 
         // Pour que la vue puisse afficher le formulaire, on doit lui envoyer le formulaire généré, avec $form->createView()
@@ -71,6 +72,7 @@ class MonProfilController extends AbstractController
 
 
     }
+
 
 
 }
