@@ -4,28 +4,53 @@
 
 {% block main %}
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Titre</th>
-            <th scope="col">Description</th>
-            <th scope="col">Auteur</th>
-            <th scope="col">Date de création</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for wish in wishes %}
-            <tr>
-                <td>{{wish.id}}</td>
-                <td><a href="{{ path('app_wish_detail',{id:wish.id}) }}">{{wish.title}}</a></td>
-                <td>{{wish.description|slice(0,80)}}...</td>
-                <td>{{wish.author}}</td>
-                <td>{{wish.dateCreated|date(" d-m-Y H:i ")}}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+
+
+
+
+                    <div class="container ">
+                        <div class="shadow p-3 mb-5 bg-body rounded ">
+                                    <h1 style="text-align: center; margin-bottom: 30px;">Mon Profil</h1>
+                            <div class="row">
+                                   <div class="col">
+                                            <label class="form-label" for="pseudo">Pseudo :</label>
+                                            <input class="form-control" id="pseudo" type="text" >
+
+                                            <label class="form-label" for="prenom">Prénom :</label>
+                                            <input class="form-control" id="prenom" type="text" >
+
+                                            <label class="form-label" for="nom">Nom :</label>
+                                            <input class="form-control" id="nom" type="text" >
+
+                                            <label class="form-label" for="telephon">Telephon :</label>
+                                            <input class="form-control" id="telephon" type="text">
+                                   </div>
+
+                                   <div class="col ">
+                                            <label class="form-label" for="email">Email :</label>
+                                            <input class="form-control" id="email" type="email">
+
+                                            <label class="form-label" for="password">Mot de passe :</label>
+                                            <input class="form-control" id="password" type="password" >
+
+                                            <label class="form-label" for="conf_password">Confirmation :</label>
+                                            <input class="form-control" id="conf_password" type="password" >
+
+                                            <label class="form-label" for="disabledInput">Ville de rattachement :</label>
+                                            <select class="form-select" id="exampleSelect1">
+                                                    <option>Angers</option>
+                                                    <option>Nantes</option>
+
+                                            </select>
+
+                                   </div>
+                            </div>
+                                            <button type="submit" class="btn btn-primary mt-5 p-3"> Enregistrer </button>
+                                            <button type="submit" class="btn btn-danger mt-5 p-3"> Annuler </button>
+                        </div>
+
+                    </div>
+
 
 
 

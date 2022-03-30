@@ -6,6 +6,7 @@ use App\Repository\ParticipantRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 class MonProfilController extends AbstractController
 {
@@ -24,8 +25,8 @@ class MonProfilController extends AbstractController
     {
 
 
-        $UserProfil = $this->participantRepo->findBy(["pseudo"=>true]);
+        $monProfil = $this->participantRepo->find($this->getUser()->getId());
+        return $this->render('mon_profil/index.html.twig',compact("monProfil"));
 
-        return $this->render('mon_profil/index.html.twig',compact($UserProfil));
     }
 }
