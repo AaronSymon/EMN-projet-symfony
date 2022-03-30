@@ -23,11 +23,10 @@ class RegistrationFormType extends AbstractType
         $builder
 
             ->add('pseudo')
-            ->add('email')
-            ->add('nom')
             ->add('prenom')
+            ->add('nom')
             ->add('telephone')
-
+            ->add('email')
             ->add('siteRatache',EntityType::class,[
                 'class'=>Site::class,
                 'choice_label'=>"nom"
