@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Sortie;
 use App\Form\FiltreSortieFormType;
+use App\Repository\ParticipantRepository;
 use App\Repository\SiteRepository;
 use App\Repository\SortieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,9 +18,9 @@ class AccueilController extends AbstractController
     /**
      * @Route("/accueil", name="app_accueil")
      */
-    public function index(Request $request, SiteRepository $siteRepo, SortieRepository $sortieRepo): Response
+    public function index(Request $request, SiteRepository $siteRepo, SortieRepository $sortieRepo, ParticipantRepository $userRepo): Response
     {
-        $siteC=""; $dateD=""; $dateF=""; $ckOrg=""; $ckIns=""; $ckNon=""; $ckPast=""; $mot="";
+        $siteC=""; $dateD=""; $dateF=""; $ckOrg="on"; $ckIns="on"; $ckNon="on"; $ckPast=""; $mot="";
         $data = array();
         $sites = $siteRepo->findAll();
         $filtre = $this->createFormBuilder($data)->getForm();
@@ -35,7 +36,7 @@ class AccueilController extends AbstractController
             $ckNon = $request->request->get('SortNon');
             $ckPast = $request->request->get('SortPast');
 
-            $user = $this->participantRepo->find($this->getUser()->getId());
+            $user = $userRepo->find($this->getUser()->getId());
             $sortieRepo->filtrer($siteC, $mot, $dateD, $dateF, $ckOrg, $ckIns, $ckNon, $ckPast, $user);
         }
         return $this->render('accueil/accueil.html.twig', [
