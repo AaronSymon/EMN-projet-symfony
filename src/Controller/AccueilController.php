@@ -39,8 +39,8 @@ class AccueilController extends AbstractController
         }
 
         $user = $userRepo->find($this->getUser()->getId());
-        //$sorties = $sortieRepo->filtrer($siteC, $mot, $dateD, $dateF, $ckOrg, $ckIns, $ckNon, $ckPast, $user);
-        $sorties = $sortieRepo->findAll();
+        $sorties = $sortieRepo->filtrer($siteC, $mot, $dateD, $dateF, $ckOrg, $ckIns, $ckNon, $ckPast, $user);
+        //$sorties = $sortieRepo->findAll();
         return $this->render('accueil/accueil.html.twig', [
             "sites" => $sites,
             "dateNow" => date("d/m/Y"),
