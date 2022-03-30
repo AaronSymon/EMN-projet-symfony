@@ -45,6 +45,11 @@ class SortieRepository extends ServiceEntityRepository
         }
     }
 
+    public function filtrer($site, $dateDeb, $dateFin, $organisateur, $participateur, $nonparticipant, $past): void
+    {
+
+    }
+
     // /**
     //  * @return Sortie[] Returns an array of Sortie objects
     //  */
