@@ -9,14 +9,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
 
 class MonProfilController extends AbstractController
 {
 
     private $participantRepo ;
 
-    function __construct(ParticipantRepository $participantRepo)// injection de dépendances
+    function __construct(ParticipantRepository $participantRepo)
     {
         $this->participantRepo = $participantRepo;
     }
@@ -33,25 +34,41 @@ class MonProfilController extends AbstractController
 
     }
     /**
-     * @Route("/modifier-profil", name="app_modifier")
+     * @Route("/modifier/profil", name="app_modifier")
      */
-    public function ModifierMonProfil(Request $request): Response
+    public function ModifierMonProfil(Request $request,UserPasswordEncoderInterface $encoder): Response
     {
-        $profil = $this->participantRepo->find($this->getUser()->getId());
-        $profilForm = $this->createForm(ModifierMonProfilType::class,$profil);
-        $profilForm->handleRequest($request);
 
-        if($profilForm->isSubmitted() && $profilForm->isValid()){
-            $profil->setPseudo()->add('pseudo');
-            $profil->setEmail()->add('email');
-            $profil->setNom()->add('nom');
-            $profil->setPrenom()->add('prenom');
-            $profil->setTelephone()->add('telephone');
-            $profil->setPassword()->add('password');
-            $profil->setSiteRatache()->add('siteRatache');
+        $user = $this->getUser();
+
+        $form = $this->createForm(ModifierMonProfilType::class, $user);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+
+            $em = $this->getDoctrine()->getManager();
+
+            $newPassword = $form->get('plainPassword')['first']->getData();
+
+            // Grâce au service, on génère un nouveau hash de notre nouveau mot de passe
+            $hashOfNewPassword = $encoder->encodePassword($user, $newPassword);
+
+            // On change l'ancien mot de passe hashé par le nouveau que l'on a généré juste au dessus
+            $user->setPassword( $hashOfNewPassword );
+
+            $em->flush();
+
+            $this->addFlash('success', 'Profil modifié avec succès.');
+            return $this->redirectToRoute('profil');
         }
 
-        return $this->render('mon_profil/modifierProfil.html.twig',["profilForm"=>$profilForm->createView()]);
+        // Pour que la vue puisse afficher le formulaire, on doit lui envoyer le formulaire généré, avec $form->createView()
+        return $this->render('mon_profil/modifierProfil.html.twig', [
+            'editProfilForm' => $form->createView()
+        ]);
+
+
 
     }
 

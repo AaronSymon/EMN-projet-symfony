@@ -7,8 +7,17 @@
 
 
 
-    {{ form(profilForm) }}
 
+    <h1 class="text-center mt-4">Modifier mon profil</h1>
 
+    <div class="registerForm offset-3 col-6 offset-3 mt-5">
+        {{ form_start(editProfilForm) }}
+        {{ form_errors(editProfilForm) }}
+        {{ form_row(editProfilForm.pseudo)}}
+        {{ form_row(editProfilForm.email) }}
+        {{ form_row(editProfilForm.plainPassword)}}
+
+        {{ form_end(editProfilForm) }}
+    </div>
 
 {% endblock %}
