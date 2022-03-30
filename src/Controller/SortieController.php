@@ -4,6 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Sortie;
 use App\Form\SortieFormType;
+use App\Repository\EtatRepository;
+use App\Repository\ParticipantRepository;
+use App\Repository\SiteRepository;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use http\Client\Curl\User;
@@ -11,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 class SortieController extends AbstractController
 {
@@ -28,8 +32,9 @@ class SortieController extends AbstractController
     /**
      * @Route("/creer-sortie", name="app_sortie_afficher")
      */
-    public function creerSortie(SortieRepository $sortieRepo,Request $request): Response
+    public function creerSortie(EtatRepository $etatRepo, SiteRepository $siteRepo,SortieRepository $sortieRepo,Request $request): Response
     {
+
 
         //Creation d'un objet Sortie
         $sortie = new Sortie();
@@ -38,9 +43,17 @@ class SortieController extends AbstractController
         $sortieForm = $this->createForm(SortieFormType::class,$sortie);
         $sortieForm->handleRequest($request);
 
+        dump($etatRepo->find($id=1));
+
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()){
-            $sortie->setOrganisateur();
+
+            //definition des valeurs par defauts de Organisateur, site, etat
+            $sortie->setOrganisateur($this->getUser());
+            $sortie->setSite($siteRepo->find($this->getUser()->getSiteRatache()));
+            $sortie->setEtat($etatRepo->find($id=1)->getId());
+
             $sortieRepo->add($sortie,true);
+
 
             return $this->redirectToRoute('app_sortie_afficher');
         }
