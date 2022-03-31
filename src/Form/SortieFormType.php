@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Lieu;
-use App\Entity\Participant;
 use App\Entity\Sortie;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -29,7 +28,7 @@ class SortieFormType extends AbstractType
                 return $lieu->getNom();
                 },
                 'mapped'=>false,
-                'multiple'=>true,
+                'multiple'=>false,
                 'expanded'=>true
             ])
             ->add('creerSortie',SubmitType::class)

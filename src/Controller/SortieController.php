@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Lieu;
 use App\Entity\Sortie;
+use App\Form\ModifierSortieType;
 use App\Form\SortieFormType;
 use App\Repository\EtatRepository;
 use App\Repository\LieuRepository;
+use App\Repository\ParticipantRepository;
 use App\Repository\SiteRepository;
 use App\Repository\SortieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -65,12 +68,40 @@ class SortieController extends AbstractController
     /**
      * @Route("/mes-sorties", name="app_mes_sorties")
      */
-    public function mesSorties(SortieRepository $sortieRepo): Response
+    public function mesSorties(ParticipantRepository $participantRepo, SortieRepository $sortieRepo): Response
+    {
+        $mesSorties = $sortieRepo->findBy(array('organisateur'=> $this->getUser()->getId()));
+
+        return $this->render('sortie/mesSorties.html.twig', compact("mesSorties"));
+    }
+
+    /**
+     * @Route("/modifier-sortie/{id}", name="app_modifier_sortie")
+     */
+    public function modifierSorties(LieuRepository $lieuRepo, SortieRepository $sortieRepo, $id, Request $request): Response
     {
 
+        //recupération de la sortie à modifier
+        $maSortieAModif = $sortieRepo->find($id);
 
-        $sorties = $sortieRepo->findAll();
 
-        return $this->render('sortie/mesSorties.html.twig', compact("sorties"));
+
+        //création du formulaire pour modifier la sortie
+        $maSortieAModifForm = $this->createForm(ModifierSortieType::class,$maSortieAModif);
+        $maSortieAModifForm->handleRequest($request);
+
+        if ($maSortieAModifForm->isSubmitted() && $maSortieAModifForm->isValid()){
+
+            //modification des données concernant la sortie
+            $maSortieAModif->setSortieLieu($lieuRepo->find($request->request->get('sortie_form')['SortieLieu']['0']));
+
+
+            return $this->redirectToRoute('app_mes_sorties');
+        }
+
+
+        return $this->render('sortie/modifierSortie.html.twig', [
+            "maSortieAModifForm"=>$maSortieAModifForm->createView()
+        ]);
     }
 }

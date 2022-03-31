@@ -33,7 +33,8 @@
             <td><ul>
                     {% for participant in sortie.participants %}
                         <li>{{ participant.pseudo }}</li>
-                    {% endfor %}</ul></td>
+                    {% endfor %}
+                </ul></td>
             <td>{{ sortie.organisateur.pseudo }}</td>
             <td>{{ sortie.site.nom }}</td>
             <td>{{ sortie.etat.libelle }}</td>

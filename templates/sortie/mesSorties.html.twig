@@ -4,5 +4,40 @@
 
 {% block main %}
 
-    <h1>test</h1>
+    <h1 class="text-center m-4">LES SORTIES QUE J'AI ORGANISEES</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Nom</th>
+            <th scope="col">Date heure de début</th>
+            <th scope="col">duree</th>
+            <th scope="col">Date limite inscription</th>
+            <th scope="col">Nombre inscription max</th>
+            <th scope="col">infos de sortie</th>
+            <th scope="col">participants</th>
+            <th scope="col">etat</th>
+            <th scope="col">Sortie lieu</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for sortie in mesSorties %}
+            <td>{{ sortie.nom }}</td>
+            <td>{{ sortie.dateHeureDebut|date("d-m-Y") }}</td>
+            <td>{{ sortie.duree }}</td>
+            <td>{{ sortie.dateLimiteInscription|date("d-m-Y") }}</td>
+            <td>{{ sortie.nbInscriptionMax }}</td>
+            <td>{{ sortie.infosSortie }}</td>
+            <td><ul>
+                    {% for participant in sortie.participants %}
+                        <li>{{ participant.pseudo }}</li>
+                    {% endfor %}
+                </ul></td>
+            <td>{{ sortie.etat.libelle }}</td>
+            <td>{{ sortie.SortieLieu.nom }}</td>
+            <td><a href="{{ path('app_modifier_sortie',{id:sortie.id }) }}">modifier</a></td>
+        </tbody>
+        {% endfor %}
+    </table>
 {% endblock %}
