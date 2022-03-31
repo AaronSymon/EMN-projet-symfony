@@ -6,7 +6,10 @@
 
 
     <div id="infoNow"><p>Date du jour : {{ dateNow }}</p>
-        <p>Participant : {{ app.user.nom }} {{ app.user.prenom }}</p></div>
+        {% if app.user %}
+        <p>Participant : {{ app.user.nom }} {{ app.user.prenom }}</p>
+        {% endif %}</div>
+
     <div class="Filtres"></div>
 
     <div id="filtreDiv">
@@ -32,19 +35,22 @@
                     <input type="date" name="dateFin" id="dateFin" {% if dateF %} value="{{ dateF }}" {% endif %}>
                 </div>
             </div>
+        {% if app.user %}
             <div id="checkFilter"><ul id="listFiltre">
                     <li><input type="checkbox" name="SortOrg" id="SortOrg" {% if ckOrg=="on" %}checked{% endif %}><label for="SortOrg">Sorties organisés</label></li>
                     <li><input type="checkbox" name="SortIns" id="SortIns" {% if ckIns=="on" %}checked{% endif %}><label for="SortIns">Sorties inscrit.e.s</label></li>
                     <li><input type="checkbox" name="SortNon" id="SortNon" {% if ckNon=="on" %}checked{% endif %}><label for="SortNon">Sorties non inscrit.e.s</label></li>
                     <li><input type="checkbox" name="SortPast" id="SortPast" {% if ckPast=="on" %}checked{% endif %}><label for="SortPast">Sorties passées</label></li>
                 </ul></div>
+        {% else %}
+        <div id="checkFilter"></div>
+        {% endif %}
             <div>
                 <input type="submit" method="post" value="Rechercher" id="BtnFiltre"></div>
         {{ form_end(filtreForm) }}
     </div>
 
     <div>
-        Tests lignes
         <table class="table">
             <thead>
             <tr>
@@ -53,10 +59,12 @@
                 <th scope="col">Date heure de début</th>
                 <th scope="col">duree</th>
                 <th scope="col">Date limite inscription</th>
+                {% if app.user %}
                 <th scope="col">Nombre inscription max</th>
                 <th scope="col">infos de sortie</th>
                 <th scope="col">participants</th>
                 <th scope="col">organisateur</th>
+                {% endif %}
                 <th scope="col">site</th>
                 <th scope="col">etat</th>
                 <th scope="col">Sortie lieu</th>
@@ -70,6 +78,7 @@
                 <td>{{ sortie.dateHeureDebut|date("d-m-Y") }}</td>
                 <td>{{ sortie.duree }}</td>
                 <td>{{ sortie.dateLimiteInscription|date("d-m-Y") }}</td>
+                {% if app.user %}
                 <td>{{ sortie.nbInscriptionMax }}</td>
                 <td>{{ sortie.infosSortie }}</td>
                 <td><ul>
@@ -77,6 +86,7 @@
                 <li>{{ participant.pseudo }}</li>
                     {% endfor %}</ul></td>
                 <td>{{ sortie.organisateur.pseudo }}</td>
+                {% endif %}
                 <td>{{ sortie.site.nom }}</td>
                 <td>{{ sortie.etat.libelle }}</td>
                 <td>{{ sortie.SortieLieu.nom}}</td>
