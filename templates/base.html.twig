@@ -6,6 +6,7 @@
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
         <link rel="stylesheet" href="{{ asset('css/style.css') }}"
         {% endblock %}
@@ -18,7 +19,7 @@
 
     <header>
 
-        {%  set menuAdmin = {"Accueil":"app_accueil","Sorties":"app_sortie_afficher","Villes":"app_villes","Sites":"app_sites","Mon profil":"app_mon_profil" , "Se deconnecter":"app_logout"} %}
+        {%  set menuAdmin = {"Accueil":"app_accueil","Sorties":"app_sortie_afficher","Villes":"app_ville","Sites":"app_sites","Mon profil":"app_mon_profil" , "Se deconnecter":"app_logout"} %}
         {%  set menuConnected = {"Accueil":"app_accueil","Sorties":"app_sortie_afficher","Mon profil":"app_mon_profil" , "Se deconnecter":"app_logout"} %}
         {%  set menuNotConnected = {"Accueil":"app_accueil","S'inscrire":"app_register", "Se Connecter":"app_login"} %}
 

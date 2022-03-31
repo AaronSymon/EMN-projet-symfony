@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello VillesController!{% endblock %}
+
+{% block main %}
+    <h1 style="text-align: center"><strong>Gérer les villes</strong> </h1>
+    <H3>Filtrer les villes</H3>
+
+    <div class="container">
+
+       Filtrer les villes
+        <div class="row">
+            <div class="col-4">
+                    <label >Le nom contient  :</label> <input type="search"> <button type="button">Rechercher</button>
+            </div>
+            <div class="col-8 offset-2">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Ville</th>
+                        <th scope="col">Code Postal</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {%    for ville in listVille %}
+                            <tr>
+
+                                <td>{{ ville.nom }}</td>
+                                <td>{{ ville.codePostal }}</td>
+                                <td> <i class="fa-regular fa-alicorn"><a href="{{ path('') }}">test</a></i> </td>
+
+                            </tr>
+
+                        {%  endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
