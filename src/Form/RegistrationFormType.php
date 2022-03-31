@@ -17,6 +17,7 @@ use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class RegistrationFormType extends AbstractType
 {
@@ -33,6 +34,7 @@ class RegistrationFormType extends AbstractType
                 'class'=>Site::class,
                 'choice_label'=>"nom"
             ])
+
 
 
             ->add('plainPassword', RepeatedType::class, [
