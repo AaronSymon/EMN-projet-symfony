@@ -33,7 +33,7 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-
+            $user->setRoles(["ROLE_USER"]);
             $user->setAdministrateur(0);
             $user->setActif(1);
 

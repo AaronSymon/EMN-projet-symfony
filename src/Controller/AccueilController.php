@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Sortie;
-use App\Form\FiltreSortieFormType;
 use App\Repository\ParticipantRepository;
 use App\Repository\SiteRepository;
 use App\Repository\SortieRepository;
@@ -20,7 +18,14 @@ class AccueilController extends AbstractController
      */
     public function index(Request $request, SiteRepository $siteRepo, SortieRepository $sortieRepo, ParticipantRepository $userRepo): Response
     {
-        $siteC="Angers"; $dateD=""; $dateF=""; $ckOrg="on"; $ckIns="on"; $ckNon="on"; $ckPast=""; $mot="";
+        $user="";
+        if($this->isGranted("ROLE_USER")){
+            $user = $userRepo->find($this->getUser()->getId());
+            $siteC=$user->getSiteRatache()->getNom();
+        } else {
+            $siteC="Angers";
+        }
+        $dateD=""; $dateF=""; $ckOrg="on"; $ckIns="on"; $ckNon="on"; $ckPast=""; $mot="";
         $data = array();
         $sites = $siteRepo->findAll();
         $filtre = $this->createFormBuilder($data)->getForm();
@@ -36,9 +41,9 @@ class AccueilController extends AbstractController
             $ckIns = $request->request->get('SortIns');
             $ckNon = $request->request->get('SortNon');
             $ckPast = $request->request->get('SortPast');
+            if(!$this->isGranted("ROLE_USER")){ $ckNon="on"; } //liste toutes les sorties non passees quand non connecté
         }
 
-        $user = $userRepo->find($this->getUser()->getId());
         $sorties = $sortieRepo->filtrer($siteC, $mot, $dateD, $dateF, $ckOrg, $ckIns, $ckNon, $ckPast, $user);
         return $this->render('accueil/accueil.html.twig', [
             "sites" => $sites,
