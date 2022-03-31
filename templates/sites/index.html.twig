@@ -1,7 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello SitesController!{% endblock %}
+{% block title %}Gestion des sites{% endblock %}
 
 {% block main %}
-    <h1>Sites!</h1>
+    <h1>Gestion des sites</h1>
+    <div id="filterSite">
+        <form name="formNom" id="formNom" method="post">
+        <label for="nomS">Le nom contient :</label>
+        <input type="text" name="nomS">
+        <input type="submit" value="Rechercher">
+        </form>
+    </div>
+   <table class="tableAdmin"><thead><tr><th scope="col">Ville</th><th>Actions</th></tr></thead>
+       <tbody>
+       {% for site in sites %}
+       <tr><td>{{ site.nom }}</td><td><form name="formGes" method="post"> <input type="hidden" name="siteNom" value="{{ site.nom }}"><input type="submit" id="btnGesSite" value="Supprimer"></form></td></tr>
+       {% endfor %}
+       <tr><td><form name="formAddSite" id="formAddSite" method="post"><input type="text" name="nomAdd"></form></td><td><input type="submit" id="btnGesSite" form="formAddSite" value="Ajouter"></td></tr>
+       </tbody>
+   </table>
+
+
 {% endblock %}

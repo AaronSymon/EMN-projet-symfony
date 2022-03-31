@@ -14,7 +14,7 @@ class AccueilController extends AbstractController
 {
 
     /**
-     * @Route("/accueil", name="app_accueil")
+     * @Route("/", name="app_accueil")
      */
     public function index(Request $request, SiteRepository $siteRepo, SortieRepository $sortieRepo, ParticipantRepository $userRepo): Response
     {

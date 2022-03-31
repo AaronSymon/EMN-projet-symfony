@@ -45,6 +45,14 @@ class SiteRepository extends ServiceEntityRepository
         }
     }
 
+    public function search($mot){
+        $qb = $this->createQueryBuilder('s')
+            ->where("s.nom LIKE :nom")
+            ->setParameter("nom", "%".$mot."%");
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
+
     // /**
     //  * @return Site[] Returns an array of Site objects
     //  */

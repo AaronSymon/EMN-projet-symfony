@@ -50,3 +50,70 @@ h2{
     width: 150px;
     height: 100px;
 }
+
+#btnCreaSortie{
+    margin-top: 5px;
+    margin-left: 100px;
+    height: 50px;
+}
+
+.tableSortie{
+    margin:auto;
+    width: 90%;
+    border: 2px black solid;
+    overflow: auto;
+}
+
+.tableSortie td{
+    border-right: solid black 2px;
+    padding-left: 2px;
+}
+
+.tableSortie th{
+    border-right: solid black 2px;
+    padding-left: 5px;
+    background-color: lightgrey;
+}
+
+.tableAdmin{
+    margin-left: 15%;
+    border: solid black 2px;
+    width: 40%;
+    overflow: auto;
+    max-height: 400px;
+}
+
+.tableAdmin td{
+    border-right: solid black 2px;
+    padding-left: 2px;
+}
+
+.tableAdmin th{
+    border-right: solid black 2px;
+    padding-left: 5px;
+    background-color: lightgrey;
+}
+
+.tableAdmin a{
+    text-decoration: none;
+}
+
+table tr:nth-child(even){
+    background-color: #E8E8E8;
+}
+
+#filterSite{
+    margin-bottom: 10px;
+    margin-left: 15%;
+}
+
+#btnGesSite{
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+    color: #0000EE;
+    padding: 0;
+    font-family: inherit;
+    font-size: inherit;
+}
