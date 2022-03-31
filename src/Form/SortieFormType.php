@@ -33,7 +33,6 @@ class SortieFormType extends AbstractType
             ])
             ->add('creerSortie',SubmitType::class)
             ->add('reset',ResetType::class)
-//            ->add('Retour', )
         ;
     }
 

@@ -84,17 +84,14 @@ class SortieController extends AbstractController
         //recupération de la sortie à modifier
         $maSortieAModif = $sortieRepo->find($id);
 
-
-
         //création du formulaire pour modifier la sortie
         $maSortieAModifForm = $this->createForm(ModifierSortieType::class,$maSortieAModif);
         $maSortieAModifForm->handleRequest($request);
 
+
         if ($maSortieAModifForm->isSubmitted() && $maSortieAModifForm->isValid()){
 
-            //modification des données concernant la sortie
-            $maSortieAModif->setSortieLieu($lieuRepo->find($request->request->get('sortie_form')['SortieLieu']['0']));
-
+            $sortieRepo->add($maSortieAModif,true);
 
             return $this->redirectToRoute('app_mes_sorties');
         }
