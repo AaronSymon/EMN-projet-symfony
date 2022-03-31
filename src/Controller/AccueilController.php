@@ -20,7 +20,7 @@ class AccueilController extends AbstractController
      */
     public function index(Request $request, SiteRepository $siteRepo, SortieRepository $sortieRepo, ParticipantRepository $userRepo): Response
     {
-        $siteC=""; $dateD=""; $dateF=""; $ckOrg="on"; $ckIns="on"; $ckNon="on"; $ckPast=""; $mot=""; $sorties=array();
+        $siteC="Angers"; $dateD=""; $dateF=""; $ckOrg="on"; $ckIns="on"; $ckNon="on"; $ckPast=""; $mot="";
         $data = array();
         $sites = $siteRepo->findAll();
         $filtre = $this->createFormBuilder($data)->getForm();
@@ -29,7 +29,7 @@ class AccueilController extends AbstractController
 
         if ($request->isMethod('POST')) {
             $siteC = $request->request->get('Site');
-            $mot = $request->request->get('nameSearch');
+            $mot = $request->request->get('search');
             $dateD = $request->request->get("dateDebut");
             $dateF = $request->request->get("dateFin");
             $ckOrg = $request->request->get('SortOrg');
@@ -40,7 +40,6 @@ class AccueilController extends AbstractController
 
         $user = $userRepo->find($this->getUser()->getId());
         $sorties = $sortieRepo->filtrer($siteC, $mot, $dateD, $dateF, $ckOrg, $ckIns, $ckNon, $ckPast, $user);
-        //$sorties = $sortieRepo->findAll();
         return $this->render('accueil/accueil.html.twig', [
             "sites" => $sites,
             "dateNow" => date("d/m/Y"),

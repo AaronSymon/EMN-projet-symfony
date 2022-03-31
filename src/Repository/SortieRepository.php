@@ -51,7 +51,9 @@ class SortieRepository extends ServiceEntityRepository
             ->leftJoin('so.site', 's')
             ->leftJoin('so.etat', 'e')
             ->where("so.nom  LIKE :nom")
-            ->setParameter("nom","%".$mot."%");
+            ->setParameter("nom","%".$mot."%")
+            ->andWhere("s.nom = :site")
+            ->setParameter("site",$site);
         if($dateDeb!=""){
             $querybuild->andWhere("so.dateHeureDebut > :dateD")
                 ->setParameter("dateD",$dateDeb);
