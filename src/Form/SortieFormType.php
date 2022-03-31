@@ -7,6 +7,7 @@ use App\Entity\Participant;
 use App\Entity\Sortie;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -32,6 +33,8 @@ class SortieFormType extends AbstractType
                 'expanded'=>true
             ])
             ->add('creerSortie',SubmitType::class)
+            ->add('reset',ResetType::class)
+//            ->add('Retour', )
         ;
     }
 

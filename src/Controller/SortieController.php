@@ -61,4 +61,16 @@ class SortieController extends AbstractController
         ["sortieForm"=>$sortieForm->createView()]
         );
     }
+
+    /**
+     * @Route("/mes-sorties", name="app_mes_sorties")
+     */
+    public function mesSorties(SortieRepository $sortieRepo): Response
+    {
+
+
+        $sorties = $sortieRepo->findAll();
+
+        return $this->render('sortie/mesSorties.html.twig', compact("sorties"));
+    }
 }

@@ -3,6 +3,7 @@
 {% block title %}Liste de sorties{% endblock %}
 
 {% block main %}
+
     <table class="table">
         <thead>
         <tr>
@@ -41,5 +42,16 @@
         </tbody>
         {% endfor %}
     </table>
+
+    <div class="col-6 offset-3 d-flex justify-content-around"">
+        <button class="btn btn-dark btn-lg" type="button">
+            <a class="link-secondary" href="{{ path('app_mes_sorties') }}">Mes sorties</a>
+        </button>
+
+        <button class="btn btn-dark btn-lg" type="button">
+            <a class="link-secondary" href="{{ path('app_sortie_creer') }}">Créer une sortie</a>
+        </button>
+    </div>
+
 
 {% endblock %}
