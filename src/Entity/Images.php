@@ -1,0 +1,58 @@
+<?php
+
+namespace App\Entity;
+
+use App\Repository\ImagesRepository;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity(repositoryClass=ImagesRepository::class)
+ */
+class Images
+{
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $name;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Participant::class, cascade={"persist", "remove"})
+     */
+    private $imageProfil;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getImageProfil(): ?Participant
+    {
+        return $this->imageProfil;
+    }
+
+    public function setImageProfil(?Participant $imageProfil): self
+    {
+        $this->imageProfil = $imageProfil;
+
+        return $this;
+    }
+}
