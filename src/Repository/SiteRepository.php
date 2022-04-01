@@ -53,6 +53,11 @@ class SiteRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    public function modif($site){
+        $this->_em->persist($site);
+        $this->_em->flush();
+    }
+
     // /**
     //  * @return Site[] Returns an array of Site objects
     //  */

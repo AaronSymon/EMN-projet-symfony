@@ -67,7 +67,7 @@
             {% for sortie in sorties %}
             <tr>
                 <td>{{ sortie.nom }}</td>
-                <td>{{ sortie.dateHeureDebut|date("d-m-Y") }}</td>
+                <td>{{ sortie.dateHeureDebut|date("d-m-Y H:i") }}</td>
                 <td>{{ sortie.dateLimiteInscription|date("d-m-Y") }}</td>
                 {% if app.user %}
                 <td>{{ sortie.nbInscriptionMax }}</td>

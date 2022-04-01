@@ -6,6 +6,7 @@ use App\Entity\Site;
 use App\Repository\SiteRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,11 +27,16 @@ class SitesController extends AbstractController
             if($request->request->has("nomS")) { //vérifie s'il récupère via le filtre
                 $nom = $request->request->get("nomS");
                 $sites = $siteRepo->search($nom);
-            } elseif ($request->request->has("siteNom")){
+            } elseif($request->request->has("newNom")){ //Modifier
+                $site = $siteRepo->findOneBy(["nom" => $request->request->get("siteNom")]);
+                $site->setNom($request->request->get("newNom"));
+                $siteRepo->modif($site);
+                $sites = $siteRepo->findAll();
+            } elseif ($request->request->has("siteNom")){ //Supprimer
                 $siteSupp=$siteRepo->findOneBy(["nom" => $request->request->get("siteNom")]);
                 $siteRepo->remove($siteSupp);
                 $sites = $siteRepo->findAll();
-            } else {
+            } else { //Ajouter
                 $newSite = new Site();
                 $add = $request->request->get('nomAdd');
                 $newSite->setNom($add);

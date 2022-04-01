@@ -14,8 +14,9 @@
     </div>
    <table class="tableAdmin"><thead><tr><th scope="col">Ville</th><th>Actions</th></tr></thead>
        <tbody>
-       {% for site in sites %}
-       <tr><td>{{ site.nom }}</td><td><form name="formGes" method="post"> <input type="hidden" name="siteNom" value="{{ site.nom }}"><input type="submit" id="btnGesSite" value="Supprimer"></form></td></tr>
+       {% set i=0 %}
+       {% for site in sites %}{% set i=i+1 %}
+           <tr><td id="colNom{{ i }}"><label id="labelSite{{ i }}">{{ site.nom }}</label></td><td><form name="formGes" method="post"> <input type="hidden" id="SiteNom{{ i }}" name="siteNom" value="{{ site.nom }}"><label id="btnGesSite" onclick="modifier({{ i }})">Modifier</label> <input type="submit" id="btnGesSite" value="Supprimer"></form></td></tr>
        {% endfor %}
        <tr><td><form name="formAddSite" id="formAddSite" method="post"><input type="text" name="nomAdd"></form></td><td><input type="submit" id="btnGesSite" form="formAddSite" value="Ajouter"></td></tr>
        </tbody>
