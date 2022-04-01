@@ -45,7 +45,8 @@ class VilleController extends AbstractController
     public function lister(VilleRepository $villeRepo): Response
     {
        $villes = $villeRepo->findAll();
-       return $this->render('ville/index.html.twig',compact('villes'));
+
+       return $this->render('ville/index.html.twig',["villes" => $villes]);
 
     }
 

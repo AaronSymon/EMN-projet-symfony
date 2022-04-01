@@ -23,21 +23,11 @@
                     </tr>
                     </thead>
                     <tbody>
-                        {%    for ville in villes %}
+                        {% for ville in villes %}
                             <tr>
 
                                 <td>{{ ville.nom }}</td>
                                 <td>{{ ville.codePostal }}</td>
-                                <td>
-                                    <div>
-
-                                        <script src="{{ asset("js/script.js") }}">
-                                                <button type="button" onclick="remmove()">Remove</button>
-                                                <button type="button" onclick="ajouter()">Ajouter</button>
-                                        </script>
-                                    </div>
-
-                                </td>
 
                             </tr>
 
