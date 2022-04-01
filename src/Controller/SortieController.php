@@ -2,13 +2,13 @@
 
 namespace App\Controller;
 
-use App\Entity\Lieu;
+
 use App\Entity\Sortie;
+use App\Form\AnnulerSortieType;
 use App\Form\ModifierSortieType;
 use App\Form\SortieFormType;
 use App\Repository\EtatRepository;
 use App\Repository\LieuRepository;
-use App\Repository\ParticipantRepository;
 use App\Repository\SiteRepository;
 use App\Repository\SortieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -107,8 +107,18 @@ class SortieController extends AbstractController
      */
     public function annulerSorties(LieuRepository $lieuRepo, SortieRepository $sortieRepo, $id, Request $request): Response
     {
-        return $this->render('sortie/annulerSortie.html.twig',[
 
+        //Recuperation de la sortie à annuler
+        $sortieAAnnuler = $sortieRepo->find($id);
+
+        //Creation d'un formulaire pour saisir motif annulation sortie
+
+        $sortieAAnnulerForm = $this->createForm(AnnulerSortieType::class,$sortieAAnnuler);
+        $sortieAAnnulerForm->handleRequest($request);
+
+        return $this->render('sortie/annulerSortie.html.twig',[
+            "sortieAAnnulerForm"=>$sortieAAnnulerForm->createView(),
+            "sortieAAnnuler"=>$sortieAAnnuler
         ]);
     }
 
