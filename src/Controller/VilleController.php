@@ -16,13 +16,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class VilleController extends AbstractController
 {
-
-
-
-
-
     /**
-     * @Route("/ville", name="app_ville")
+     * @Route("/ajouter/ville", name="app_ajouter")
      */
     public function ajouter(EntityManagerInterface  $em, Request $request): Response
     {
@@ -34,36 +29,57 @@ class VilleController extends AbstractController
             $em->flush();
 
         }
-        return $this->render('ville/index.html.twig',[
-            "formVille" =>$formVille->createView()
+        return $this->render('ville/ajouter.html.twig',[
+            "ajouterVille" =>$formVille->createView()
         ]);
     }
 
+
     /**
-     * @Route("/ville/list", name="app_lister")
+     * @Route("/list/Ville", name="app_lister")
      */
     public function lister(VilleRepository $villeRepo): Response
     {
-       $villes = $villeRepo->findAll();
+       $villesList = $villeRepo->findAll();
 
-       return $this->render('ville/index.html.twig',["villes" => $villes]);
+       return $this->render('ville/index.html.twig',["villesList" => $villesList]);
 
     }
 
 
 
     /**
-     * @Route("/ville/remove", name="app_remove")
+     * @Route("/ville/remove/", name="app_remove")
      */
     public function remove(Request $request,VilleRepository $villeRepo): Response
     {
-        $token = $request->request->get('_token');
-        if($this->isCsrfTokenValid('delete-item',  $token)){
-            $id = $request->request->get('id');
-            $ville =$this->villeRepo->find($id);
-            $this->villeRepo ->remove($ville);
+        $villeDelete = $villeRepo->find($id);
+        $ville = $villeRepo->remove($villeDelete);
+        return $this->render('ville/supprimer.html.twig', [
+            'villeSupprimer' => $ville->createView()]);
+    }
+
+
+    /**
+     * @Route("/ville/modifier", name="app_modifier")
+     */
+    public function modifier(Request $request,VilleRepository $villeRepo,$id): Response
+    {
+        $villeModifier = $villeRepo->find($id);
+
+        $formVille = $this->createForm(VilleType::class, $villeModifier);
+
+        $formVille->handleRequest($request);
+
+
+        if($formVille->isSubmitted() && $formVille->isValid()){
+            $villeRepo->add($villeModifier,true);
         }
-        return $this->redirectToRoute(app_lister);
+
+        return $this->render('ville/modifier.html.twig', [
+            'formVille' => $formVille->createView()
+        ]);
+
     }
 
 
