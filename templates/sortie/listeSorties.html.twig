@@ -39,12 +39,17 @@
             <td>{{ sortie.site.nom }}</td>
             <td>{{ sortie.etat.libelle }}</td>
             <td>{{ sortie.SortieLieu.nom }}</td>
+
+            {% if (app.user.id != sortie.organisateur.id)%}
+                <td><a href=" {{ path('app_sortie-inscription', {id:sortie.id}) }}">S'inscrire</a></td>
+            {% endif %}
+
         </tr>
         </tbody>
         {% endfor %}
     </table>
 
-    <div class="col-6 offset-3 d-flex justify-content-around"">
+    <div class="col-6 offset-3 d-flex justify-content-around">
         <button class="btn btn-dark btn-lg" type="button">
             <a class="link-secondary" href="{{ path('app_mes_sorties') }}">Mes sorties</a>
         </button>

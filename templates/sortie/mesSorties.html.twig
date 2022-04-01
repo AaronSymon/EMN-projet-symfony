@@ -37,6 +37,7 @@
             <td>{{ sortie.etat.libelle }}</td>
             <td>{{ sortie.SortieLieu.nom }}</td>
             <td><a href="{{ path('app_modifier_sortie',{id:sortie.id }) }}">modifier</a></td>
+            <td><a href="{{ path('app_annuler_sortie',{id:sortie.id }) }}">Annuler une sortie</a></td>
         </tbody>
         {% endfor %}
     </table>

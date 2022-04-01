@@ -23,6 +23,7 @@ class ModifierSortieType extends AbstractType
             ->add('dateLimiteInscription')
             ->add('nbInscriptionMax')
             ->add('infosSortie')
+
             ->add('SortieLieu', EntityType::class,[
                 'class'=>Lieu::class,
                 'choice_label'=>function(Lieu $lieu){

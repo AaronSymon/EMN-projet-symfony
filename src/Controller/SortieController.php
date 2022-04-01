@@ -68,7 +68,7 @@ class SortieController extends AbstractController
     /**
      * @Route("/mes-sorties", name="app_mes_sorties")
      */
-    public function mesSorties(ParticipantRepository $participantRepo, SortieRepository $sortieRepo): Response
+    public function mesSorties(SortieRepository $sortieRepo): Response
     {
         $mesSorties = $sortieRepo->findBy(array('organisateur'=> $this->getUser()->getId()));
 
@@ -100,5 +100,32 @@ class SortieController extends AbstractController
         return $this->render('sortie/modifierSortie.html.twig', [
             "maSortieAModifForm"=>$maSortieAModifForm->createView()
         ]);
+    }
+
+    /**
+     * @Route("/annuler-sortie/{id}", name="app_annuler_sortie")
+     */
+    public function annulerSorties(LieuRepository $lieuRepo, SortieRepository $sortieRepo, $id, Request $request): Response
+    {
+        return $this->render('sortie/annulerSortie.html.twig',[
+
+        ]);
+    }
+
+    /**
+     * @Route("/sortie-inscription/{id}", name="app_sortie-inscription")
+     */
+    public function sortieInscription(SortieRepository $sortieRepo, $id): Response
+    {
+        //Récupération de la sortie où s'inscrire
+        $sortieInscription = $sortieRepo->find($id);
+
+        //Ajout du participant à la liste des personnes inscrite
+        $sortieInscription->addParticipant($this->getUser());
+
+        //Ajout du participant à la Base de données
+        $sortieRepo->add($sortieInscription,true);
+
+        return $this->redirectToRoute('app_sortie_afficher', compact("sortieInscription"));
     }
 }
