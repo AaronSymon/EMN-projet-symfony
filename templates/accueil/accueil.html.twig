@@ -57,28 +57,38 @@
                 <th scope="col">Date heure de début</th>
                 <th scope="col">Date limite inscription</th>
                 {% if app.user %}
-                <th scope="col">Nombre inscription max</th>
-                <th scope="col">organisateur</th>
+                    <th scope="col">Nombre inscrits</th>
+                    <th scope="col">etat</th>
+                    <th scope="col">Inscrit</th>
+                    <th scope="col">organisateur</th>
+                    <th scope="col">Action</th>
                 {% endif %}
-                <th scope="col">etat</th>
             </tr>
             </thead>
             <tbody>
             {% for sortie in sorties %}
             <tr>
-                <td>{{ sortie.nom }}</td>
+                <td><a href="#{# path() #}">{{ sortie.nom }}</a></td>
                 <td>{{ sortie.dateHeureDebut|date("d-m-Y H:i") }}</td>
                 <td>{{ sortie.dateLimiteInscription|date("d-m-Y") }}</td>
                 {% if app.user %}
-                <td>{{ sortie.nbInscriptionMax }}</td>
-{#                <td><ul>#}
-{#                    {% for participant in sortie.participants %}#}
-{#                <li>{{ participant.pseudo }}</li>#}
-{#                    {% endfor %}</ul></td>#}
-                <td>{{ sortie.organisateur.pseudo }}</td>
+                    <td>{% set i=0 %} {% set inscrit = 0 %}
+                        {% for participant in sortie.participants %}
+                            {% if participant.id == app.user.id %}
+                            {% set inscrit = 1 %}
+                            {% endif %}
+                            {% set i=i+1 %}
+                        {% endfor %}
+                        {{ i }}/{{ sortie.nbInscriptionMax }}</td>
+                    <td>{{ sortie.etat.libelle }}</td>
+                    <td>{% if inscrit == 1 %} X {% endif %}</td>
+                    <td>{{ sortie.organisateur.pseudo }}</td>
+                    <td>{% if sortie.organisateur.id == app.user.id %}
+                            {% if sortie.etat.libelle == "Creee" %}Modifier Publier
+                            {% elseif sortie.etat.libelle == "Ouverte" or sortie.etat.libelle == "Fermee" %}Annuler{% endif %}
+                        {% elseif inscrit == 1 %} Se désister
+                        {% else %}S'inscrire{% endif %}</td>
                 {% endif %}
-                <td>{{ sortie.etat.libelle }}</td>
-{#                <td>{{ sortie.SortieLieu.nom}}</td>#}
             </tr>{% endfor %}
             </tbody>
 

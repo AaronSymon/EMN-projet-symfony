@@ -63,6 +63,8 @@ class SortieRepository extends ServiceEntityRepository
                 ->setParameter("dateF",$dateFin);
         }
         if($organisateur=="on"){
+            $querybuild->andWhere("e.libelle = 'Cree' and so.organisateur = :oUser")
+                ->setParameter("oUser",$user);
             if($participateur!="on" and $nonparticipant!="on"){ //uniquement sortie organisé
                 $querybuild->andWhere("so.organisateur = :user")
                     ->setParameter("user", $user);
@@ -78,6 +80,7 @@ class SortieRepository extends ServiceEntityRepository
             }
             //else : les trois sont activés : toutes les sorties sauf ceux passées (géré dans le else de $past)
         } else {
+            $querybuild->andWhere("e.libelle != Cree");
             //gestion filtre participant + nonparticipant sachant que non organisé
             if ($participateur != "on" or $nonparticipant != "on") {
                 if ($participateur == "on") {

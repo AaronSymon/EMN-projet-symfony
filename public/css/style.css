@@ -81,6 +81,10 @@ h2{
     background-color: lightgrey;
 }
 
+.tableSortie a{
+    text-decoration: none;
+}
+
 .tableAdmin{
     margin-left: 15%;
     border: solid black 2px;

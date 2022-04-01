@@ -45,6 +45,7 @@ class AccueilController extends AbstractController
         }
 
         $sorties = $sortieRepo->filtrer($siteC, $mot, $dateD, $dateF, $ckOrg, $ckIns, $ckNon, $ckPast, $user);
+
         return $this->render('accueil/accueil.html.twig', [
             "sites" => $sites,
             "dateNow" => date("d/m/Y"),
