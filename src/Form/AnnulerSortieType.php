@@ -18,6 +18,7 @@ class AnnulerSortieType extends AbstractType
             ->add('dateLimiteInscription')
             ->add('nbInscriptionMax')
             ->add('infosSortie')
+            ->add('motifAnnulation')
             ->add('participants')
             ->add('organisateur')
             ->add('site')
