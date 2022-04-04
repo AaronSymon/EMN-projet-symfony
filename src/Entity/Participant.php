@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ParticipantRepository::class)
@@ -88,11 +87,18 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $sortiesOrganisees;
 
+    
+
     /**
      * @ORM\ManyToOne(targetEntity=Site::class, inversedBy="participants")
      * @ORM\JoinColumn(nullable=false)
      */
     private $siteRatache;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $image;
 
     public function __construct()
     {
@@ -326,6 +332,18 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     public function setSiteRatache(?Site $siteRatache): self
     {
         $this->siteRatache = $siteRatache;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }

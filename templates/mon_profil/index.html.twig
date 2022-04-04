@@ -21,6 +21,13 @@
             <label class="col-sm-2 col-form-label">Email :</label>
             <input class="form-control" type="text" value="{{ app.user.email}}" aria-label="readonly input example" readonly>
 
+            <div class="card" style="width: 18rem;">
+                <img src="{{ form_row(form.brochure) }}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+
             <button onclick="location.href = '{{ path('app_modifier') }}';" id="myButton" class="btn btn-success my-3" >Modifier</button>
             <button onclick="location.href = '{{ path('app_accueil') }}';" id="myButton" class="btn btn-danger my-3" >Retour</button>
         </div>
