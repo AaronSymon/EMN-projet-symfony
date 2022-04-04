@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Bar\UserInterface;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class MonProfilController extends AbstractController
 {
@@ -41,14 +42,20 @@ class MonProfilController extends AbstractController
     {
 
         $user = $this->getUser();
-
         $form = $this->createForm(ModifierMonProfilType::class, $user);
+
 
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-
             $em = $this->getDoctrine()->getManager();
+            $image = $form->get('image')->getData();
+
+            if ($image) {
+                $originalimage = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$brochureFile->guessExtension();
 
             $newPassword = $form->get("plainPassword")['first']->getData();
 
