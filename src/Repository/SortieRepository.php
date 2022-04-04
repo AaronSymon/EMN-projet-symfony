@@ -62,57 +62,36 @@ class SortieRepository extends ServiceEntityRepository
             $querybuild->andWhere("so.dateHeureDebut < :dateF")
                 ->setParameter("dateF",$dateFin);
         }
-        if($organisateur=="on"){
-            $querybuild->andWhere("e.libelle = 'Cree' and so.organisateur = :oUser")
-                ->setParameter("oUser",$user);
-            if($participateur!="on" and $nonparticipant!="on"){ //uniquement sortie organisé
-                $querybuild->andWhere("so.organisateur = :user")
-                    ->setParameter("user", $user);
-            } elseif ($participateur != "on" or $nonparticipant != "on") {
-                if ($participateur == "on") { //sortie organisé + inscrit
-                    $querybuild->andWhere("so.organisateur = :user or :pUser MEMBER OF so.participants")
-                        ->setParameter("pUser", $user);
-                } elseif ($nonparticipant == "on") {
-                    $querybuild->andWhere("so.organisateur = :user or :pUser NOT MEMBER OF so.participants")
-                        ->setParameter("pUser", $user);
-                }
-                $querybuild->setParameter("user", $user);
-            }
-            //else : les trois sont activés : toutes les sorties sauf ceux passées (géré dans le else de $past)
-        } else {
-            $querybuild->andWhere("e.libelle != Cree");
-            //gestion filtre participant + nonparticipant sachant que non organisé
-            if ($participateur != "on" or $nonparticipant != "on") {
-                if ($participateur == "on") {
-                    $querybuild->andWhere(":pUser MEMBER OF so.participants")
-                        ->setParameter("pUser", $user);
-                }
-                if ($nonparticipant == "on") {
-                    $querybuild->andWhere(":nUser NOT MEMBER OF so.participants")
-                        ->andWhere(":nUser != so.organisateur")
-                        ->setParameter("nUser", $user);
-                }
-            } else {
-                $querybuild->andWhere(":xUser != so.organisateur")
-                    ->setParameter("xUser", $user);
-            }
+
+        if($past!="on") {
+            $querybuild->andWhere("e.libelle != 'Passee'");
         }
-        if($past=="on"){
-            if($organisateur=="on" or $participateur=="on" or $nonparticipant=="on"){
-                $querybuild->orWhere("e.libelle = 'passee' and so.dateHeureDebut < :mois")
-                    ->setParameter("mois", date("d-m-Y", strtotime("-1 month")));
-            } else {
-                $querybuild->andWhere("e.libelle = 'passee'")
-                    ->andWhere("so.dateHeureDebut < :mois")
-                    ->setParameter("mois", date("d-m-Y", strtotime("-1 month")));
+        if($organisateur=="on" and $participateur=="on" and $nonparticipant=="on"){
+            $querybuild->andWhere("(so.organisateur =:user ) or (so.organisateur !=:user and e.libelle!='Creee')");
+        }
+        if($organisateur!="on" and $nonparticipant=="on"){
+            if($participateur!="on"){
+                $querybuild->andWhere(":user NOT MEMBER OF so.participants");
             }
-        } else {
-            if($organisateur=="on" or $participateur=="on" or $nonparticipant=="on"){
-                $querybuild->andWhere("e.libelle != 'passee'");
-            } else { //pas de filtre coché : pas de résultat. Requête rendant forcément 0 résultat
-                $querybuild->andWhere("e.libelle != 'passee'")
-                    ->andWhere("e.libelle = 'passee'");
-            }
+            $querybuild->andWhere("e.libelle !='Creee' and so.organisateur !=:user");
+        }
+        if($organisateur!="on" and $participateur=="on" and $nonparticipant!="on"){
+            $querybuild->andWhere(":user MEMBER OF so.participants");
+        }
+        if($organisateur=="on" and $participateur=="on" and $nonparticipant!="on"){
+            $querybuild->andWhere("(:user MEMBER OF so.participants) or (so.organisateur =:user )");
+        }
+        if($organisateur=="on" and $participateur!="on" and $nonparticipant!="on"){
+            $querybuild->andWhere("so.organisateur =:user");
+        }
+        if($organisateur=="on" and $participateur!="on" and $nonparticipant=="on"){
+            $querybuild->andWhere("(:user NOT MEMBER OF so.participants and e.libelle !='Creee') or so.organisateur = :user");
+        }
+        if($organisateur!="on" and $participateur!="on" and $nonparticipant!="on"){
+            $querybuild->andWhere("e.libelle = 'Creee' and e.libelle != 'Creee'");
+        }
+        if($organisateur=="on" or $participateur=="on" or $nonparticipant=="on" or $past=="on") {
+            $querybuild->setParameter("user", $user);
         }
 
         $query = $querybuild->getQuery();
