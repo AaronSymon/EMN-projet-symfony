@@ -6,7 +6,6 @@ use App\Entity\Lieu;
 use App\Entity\Sortie;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -24,7 +23,7 @@ class ModifierSortieType extends AbstractType
             ->add('dateLimiteInscription')
             ->add('nbInscriptionMax')
             ->add('infosSortie')
-            ->add('image',FileType::class)
+
             ->add('SortieLieu', EntityType::class,[
                 'class'=>Lieu::class,
                 'choice_label'=>function(Lieu $lieu){
