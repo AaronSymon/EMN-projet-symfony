@@ -57,7 +57,6 @@ class MonProfilController extends AbstractController
 
             // On change l'ancien mot de passe hashé par le nouveau que l'on a généré juste au dessus
             $user->setPassword( $hashOfNewPassword );
-
             $em->flush();
 
             $this->addFlash('success', 'Profil modifié avec succès.');
