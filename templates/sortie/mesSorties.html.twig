@@ -36,8 +36,16 @@
                 </ul></td>
             <td>{{ sortie.etat.libelle }}</td>
             <td>{{ sortie.SortieLieu.nom }}</td>
+
+        {% if (sortie.etat.libelle != "Annulee") %}
             <td><a href="{{ path('app_modifier_sortie',{id:sortie.id }) }}">Modifier</a></td>
             <td><a href="{{ path('app_annuler_sortie',{id:sortie.id }) }}">Annuler</a></td>
+
+            {% else %}
+
+            <td><span>sortie annulée</span></td>
+
+        {% endif %}
         </tbody>
         {% endfor %}
     </table>

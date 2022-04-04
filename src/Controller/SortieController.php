@@ -21,11 +21,16 @@ class SortieController extends AbstractController
     /**
      * @Route("/afficher-sortie", name="app_sortie_afficher")
      */
-    public function afficherSortie(SortieRepository $sortieRepo): Response
+    public function afficherSortie(EtatRepository $etatRepo, SortieRepository $sortieRepo): Response
     {
 
-
         $sorties = $sortieRepo->findAll();
+
+        for ($sortie = 0;  $sortie <= count($sorties)-1; $sortie++){
+            if ($sorties[$sortie]->getDateLimiteInscription() >= date("Y-m-d H:i:s")){
+                $sorties[$sortie]->setEtat($etatRepo->find(3));
+            }
+        }
 
         return $this->render('sortie/listeSorties.html.twig', compact("sorties"));
     }
@@ -105,7 +110,7 @@ class SortieController extends AbstractController
     /**
      * @Route("/annuler-sortie/{id}", name="app_annuler_sortie")
      */
-    public function annulerSorties(LieuRepository $lieuRepo, SortieRepository $sortieRepo, $id, Request $request): Response
+    public function annulerSorties(EtatRepository $etatRepo, SortieRepository $sortieRepo, $id, Request $request): Response
     {
 
         //Recuperation de la sortie à annuler
@@ -115,6 +120,15 @@ class SortieController extends AbstractController
 
         $sortieAAnnulerForm = $this->createForm(AnnulerSortieType::class,$sortieAAnnuler);
         $sortieAAnnulerForm->handleRequest($request);
+
+        if ($sortieAAnnulerForm->isSubmitted() && $sortieAAnnulerForm->isValid()){
+
+            $sortieAAnnuler->setEtat($etatRepo->find(6));
+
+            $sortieRepo->add($sortieAAnnuler);
+
+            return $this->redirectToRoute('app_mes_sorties');
+        }
 
         return $this->render('sortie/annulerSortie.html.twig',[
             "sortieAAnnulerForm"=>$sortieAAnnulerForm->createView(),
@@ -137,5 +151,24 @@ class SortieController extends AbstractController
         $sortieRepo->add($sortieInscription,true);
 
         return $this->redirectToRoute('app_sortie_afficher', compact("sortieInscription"));
+    }
+
+    /**
+     * @Route("/annuler-sortie-inscription/{id}", name="app_annuler-sortie-inscription")
+     */
+    public function annuelerSortieInscription(SortieRepository $sortieRepo, $id): Response
+    {
+        //Récupération de la sortie où s'inscrire
+        $annulerSortieInscription = $sortieRepo->find($id);
+
+        //Suppression du participant
+
+        $annulerSortieInscription->removeParticipant($this->getUser());
+
+        //Suppression du participant dans la  base de données
+
+        $sortieRepo->add($annulerSortieInscription,true);
+
+        return $this->redirectToRoute('app_sortie_afficher', compact("annulerSortieInscription"));
     }
 }

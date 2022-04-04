@@ -40,9 +40,40 @@
             <td>{{ sortie.etat.libelle }}</td>
             <td>{{ sortie.SortieLieu.nom }}</td>
 
-            {% if (app.user.id != sortie.organisateur.id)%}
+
+            {# Déclaration de la variable "x". Si x = 1 l'utilisateur est isncrit à la liste des participants.
+            Si x = 0 l'utilisateur n'est pas inscrit à la liste des participants#}
+
+            {% set x = 0 %}
+
+            {# Déclaration de la variable "countParticipant pour controler le nombre de personne inscrite à une sortie #}
+
+            {% set countParticipant = 0 %}
+
+            {% for participant in sortie.participants  %}
+
+                {# A chaque particpant qu'il y a dans la liste, "count Participant" s'incrémente de 1 #}
+                {% set countParticipant = countParticipant + 1 %}
+
+                {# A chaque participant qu'il a dans la liste, si "user" et "participant" sont identiques, x = 1 #}
+                {% if app.user == participant %}
+                    {% set x =1 %}
+                {% endif %}
+            {% endfor %}
+
+            {# L'on permet à l'utilisateur de s'inscrire à une sortie selon certaines conditions  #}
+            {% if (app.user.id != sortie.organisateur.id) and (sortie.etat.libelle != "Annulee") and (sortie.nbInscriptionMax != countParticipant) and (x != 1) %}
                 <td><a href=" {{ path('app_sortie-inscription', {id:sortie.id}) }}">S'inscrire</a></td>
             {% endif %}
+
+            {# L'on permet à l'utilisateur de se désinscrire s'il est déjà inscrit à la liste des participants d'une sortie
+            et selon certaines conditions#}
+            {% if (app.user.id != sortie.organisateur.id) and (sortie.etat.libelle != "Annulee") and (x == 1)%}
+                <td><a href=" {{ path('app_annuler-sortie-inscription', {id:sortie.id}) }}">Se désinscrire</a></td>
+            {% endif %}
+
+            {# L'on empeche l'utilisateur de s'inscrire  à un évenement si le nombre maximum de participant est atteind ou
+            la date limite d'inscription est dépassée. #}
 
         </tr>
         </tbody>
