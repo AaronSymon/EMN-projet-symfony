@@ -64,6 +64,7 @@
                     </ul>
                     {% endif %}
                 </div>
+                <a href="#" class="pull-left"><img id="logo" src="{{ asset('images/logo.png') }}" alt="Logo"></a>
             </div>
         </nav>
 
@@ -73,37 +74,48 @@
 
         {% endblock %}
 
-    <footer class=" text-white text-center text-lg-start bg-dark">
-        <!-- Grid container -->
-        <div class="container p-4">
-            <!--Grid row-->
-            <div class="row mt-4">
+    <footer class=" text-white text-center text-lg-start bg-dark" id="foot">
+        <div id="contact"><h5>CONTACT</h5></div>
+        <div id="contact-info"><ul >
+                <li>
+                    Angers, France
+                </li>
+                <li>
+                    projetsortie@sortirquelquepart.fr
+                </li>
+                <li>
+                    06.66.66.66.66
+                </li>
+            </ul></div>
+{#        <!-- Grid container -->#}
+{#        <div class="container p-4">#}
+{#            <!--Grid row-->#}
+{#            <div class="row mt-4">#}
 
-                <!--Grid column-->
-                <div  class="col-6 offset-3">
-                    <h5 class="text-uppercase text-center  pb-1">Contact</h5>
+{#                <!--Grid column-->#}
+{#                <div  class="col-6 offset-3">#}
+{#                    <h5 class="text-uppercase text-center  pb-1">Contact</h5>#}
 
-                        </li>
-                        <ul class="fa-ul text-center" style="padding: 0%;">
-                            <li class="mb-3" style="list-style: none">
-                                <span class="fa-li">Angers, France</span>
-                            </li>
-                            <li class="mb-3" style="list-style: none">
-                                <span class="fa-li">projetsortie@sortirquelquepart.fr</span>
-                            </li>
-                            <li class="mb-3" style="list-style: none">
-                                <span class="fa-li">06.66.66.66.66</span>
-                            </li>
-                    </ul>
-                </div>
-                <!--Grid column-->
-            </div>
-            <!--Grid row-->
-        </div>
-        <!-- Grid container -->
+{#                    <ul class="fa-ul text-center" style="padding: 0%;">#}
+{#                        <li class="mb-3" style="list-style: none">#}
+{#                            <span class="fa-li">Angers, France</span>#}
+{#                        </li>#}
+{#                        <li class="mb-3" style="list-style: none">#}
+{#                            <span class="fa-li">projetsortie@sortirquelquepart.fr</span>#}
+{#                        </li>#}
+{#                        <li class="mb-3" style="list-style: none">#}
+{#                            <span class="fa-li">06.66.66.66.66</span>#}
+{#                        </li>#}
+{#                    </ul>#}
+{#                </div>#}
+{#                <!--Grid column-->#}
+{#            </div>#}
+{#            <!--Grid row-->#}
+{#        </div>#}
+{#        <!-- Grid container -->#}
 
         <!-- Copyright -->
-        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        <div id="copy">
             © Projet Sortir : Marc, Nael, Edouard
         </div>
         <!-- Copyright -->
@@ -113,3 +125,5 @@
     </body>
 </html>
 
+</body>
+</html>

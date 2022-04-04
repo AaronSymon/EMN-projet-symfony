@@ -84,10 +84,10 @@
                     <td>{% if inscrit == 1 %} X {% endif %}</td>
                     <td>{{ sortie.organisateur.pseudo }}</td>
                     <td>{% if sortie.organisateur.id == app.user.id %}
-                            {% if sortie.etat.libelle == "Creee" %}Modifier Publier
-                            {% elseif sortie.etat.libelle == "Ouverte" or sortie.etat.libelle == "Fermee" %}Annuler{% endif %}
+                            {% if sortie.etat.libelle == "Creee" %}<a href="{{ path('app_modifier_sortie',{id:sortie.id }) }}">Modifier</a> Publier
+                            {% elseif sortie.etat.libelle == "Ouverte" or sortie.etat.libelle == "Fermee" %}<a href="{{ path('app_annuler_sortie',{id:sortie.id }) }}">Annuler</a>{% endif %}
                         {% elseif inscrit == 1 %} Se désister
-                        {% else %}S'inscrire{% endif %}</td>
+                        {% elseif(sortie.etat.libelle != "Passee") %}<a href="{{ path('app_sortie-inscription', {id:sortie.id}) }}">S'inscrire</a>{% endif %}</td>
                 {% endif %}
             </tr>{% endfor %}
             </tbody>

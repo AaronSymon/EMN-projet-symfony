@@ -22,3 +22,8 @@ function modifier(n) {
         }
     }
 }
+
+function afficher(){
+    document.getElementById("btnAjout").style.display ="none";
+    document.getElementById("lieuAjout").style.display ="block";
+}

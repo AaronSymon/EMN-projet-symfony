@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des lieux{% endblock %}
+
+{% block main %}
+    <h1>Gestion des lieux</h1>
+    <div id="filterSite">
+        <h2>Trouver un lieu</h2>
+        <form name="formNom" id="formNom" method="post">
+            <label for="nomL">Le nom contient :</label>
+            <input type="text" name="nomL">
+            <input type="submit" value="Rechercher">
+        </form>
+    </div>
+    <table class="tableLieu"><thead><tr><th scope="col">Nom</th><th>Rue</th><th>Latitude</th><th>Longitude</th><th>Ville</th>{# <th>Actions</th> #}</tr></thead>
+        <tbody>
+        {% set i=0 %}
+        {% for lieu in lieux %}{% set i=i+1 %}
+            <tr><td id="colNom{{ i }}"><label id="labelSite{{ i }}">{{ lieu.nom }}</label></td>
+                <td>{{ lieu.rue }}</td><td>{{ lieu.latitude }}</td><td>{{ lieu.longitude }}</td><td>{{ lieu.ville.nom }}</td>
+{#                <td><form name="formGes" method="post"> <input type="hidden" id="lieuNom{{ i }}" name="lieuNom" value="{{ lieu.nom }}"><label id="btnGesSite" onclick="modifier({{ i }})">Modifier</label> <input type="submit" id="btnGesSite" value="Supprimer"></form></td>#}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <button id="btnAjout" onclick="afficher()">Ajouter</button>
+    <div id="lieuAjout">
+        <form method="post" name="formAjout" id="formAjoutLieu">
+            <div>
+                <label id="lbLieu" for="Nom">Nom du lieu :</label>
+                <input type="text" name="Nom">
+
+                <label id="lbLieu" for="Rue">Adresse :</label>
+                <input type="text" name="Rue">
+            </div>
+            <div>
+                <label id="lbLieu" for="Lat">Latitude :</label>
+                <input type="text" name="Lat">
+
+                <label id="lbLieu" for="Long">Longitude :</label>
+                <input type="text" name="Long">
+            </div>
+            <div><select name="ville" id="selVille">
+                    <option value=""></option>
+                    {% for ville in villes %}
+                    <option value="{{ ville.nom }}">{{ ville.nom }}</option>
+                    {% endfor %}
+                </select>
+                {%  if is_granted("ROLE_ADMIN") %}
+                <a href="{{ path('app_ville_index') }}">Ajouter une ville</a>
+                {% endif %}
+            </div>
+            <div id="btnAjoutLieu">
+                <input type="submit" value="Ajouter">
+
+                <a href="https://www.gps-longitude-latitude.net/" target="_blank">Pour trouver les données GPS, cliquez sur ce lien</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

@@ -45,6 +45,14 @@ class LieuRepository extends ServiceEntityRepository
         }
     }
 
+    public function search($mot){
+        $qb = $this->createQueryBuilder('l')
+            ->where("l.nom LIKE :nom")
+            ->setParameter("nom", "%".$mot."%");
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
+
     // /**
     //  * @return Lieu[] Returns an array of Lieu objects
     //  */
