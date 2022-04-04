@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ville{% endblock %}
+
+{% block main %}
+
+    <div class="container">
+            <h1>Ville</h1>
+        <div class="col-12" style="text-align: right">
+            <a href="{{ path('app_ville_index') }}"><i class="fa-solid fa-house"></i></a>
+        </div>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th>Id</th>
+                                <td>{{ ville.id }}</td>
+                            </tr>
+                            <tr>
+                                <th>Nom</th>
+                                <td>{{ ville.nom }}</td>
+
+                            </tr>
+                            <tr>
+                                <th>CodePostal</th>
+                                <td>{{ ville.codePostal }}</td>
+                            </tr>
+
+
+                        </tbody>
+                    </table>
+
+            {{ include('ville/_delete_form.html.twig') }}
+            <a href="{{ path('app_ville_edit', {'id': ville.id}) }}"></a>
+
+
+
+
+{% endblock %}

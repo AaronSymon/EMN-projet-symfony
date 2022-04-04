@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ville index{% endblock %}
+
+{% block main %}
+    <div  class="container">
+
+            <h1>Ville details</h1>
+        <div class="col-12" style="text-align: right">
+            <a href="{{ path('app_ville_index') }}"><i class="fa-solid fa-house"></i></a>
+        </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nom</th>
+                        <th>CodePostal</th>
+                        <th>actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for ville in villes %}
+                    <tr>
+                        <td>{{ ville.id }}</td>
+                        <td>{{ ville.nom }}</td>
+                        <td>{{ ville.codePostal }}</td>
+                        <td>
+
+                            <button class="btn btn-outline-success">
+                                <a href="{{ path('app_ville_new') }}" style="color: #0a0a0a">
+                                     <i class="fa-solid fa-plus"></i>
+                                </a>
+                            </button>
+
+
+                            <button class="btn btn-outline-warning">
+                                <a href="{{ path('app_ville_edit', {'id': ville.id}) }}" style="color: #0a0a0a" >
+                                    <i class="fa-solid fa-marker"></i>
+                                </a>
+                            </button>
+
+                            <button class="btn btn-outline-danger">
+                                 <a href="{{ path('app_ville_show', {'id': ville.id}) }}" style="color: #0a0a0a">
+                                    <i class="fa-solid fa-info"> </i>
+                                 </a>
+                            </button>
+
+
+
+
+
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+    </div>
+
+
+
+{% endblock %}

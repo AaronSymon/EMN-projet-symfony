@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Ville{% endblock %}
+
+{% block main %}
+    <div class="container">
+            <h1>Create new Ville</h1>
+
+        <div class="col-12" style="text-align: right">
+            <a href="{{ path('app_ville_index') }}"><i class="fa-solid fa-house"></i></a>
+        </div>
+        <div class="row">
+
+
+                {{ include('ville/_form.html.twig') }}
+
+
+        </div>
+    </div>
+
+{% endblock %}

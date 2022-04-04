@@ -30,6 +30,10 @@ class RegistrationFormType extends AbstractType
             ->add('nom')
             ->add('telephone')
             ->add('email')
+            ->add('imageFilename', FileType::class,[
+                'mapped' => false
+            ])
+
             ->add('siteRatache',EntityType::class,[
                 'class'=>Site::class,
                 'choice_label'=>"nom"
