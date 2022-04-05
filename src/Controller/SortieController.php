@@ -24,10 +24,31 @@ class SortieController extends AbstractController
     public function afficherSortie(EtatRepository $etatRepo, SortieRepository $sortieRepo): Response
     {
 
+        //L'on récupère la data et l'heure de maintenant
+        date_default_timezone_set('Europe/Paris');
+        $datenow = new \DateTime();
+
+        //L'on récupere le tableau de toutes les sorties qui ne sont pas archivées
         $sorties = $sortieRepo->findAll();
 
+
+
+        //Pour chaque sorties en BDD, à chaque fois que l'on affiche la liste, l'on verifie :
+        //
+        // ---si la datetime de maintenant est supérieur ou égale à la date limite des inscriptions,
+        //si l'état de la sortie est différent de "Annulee".
+        //Si ces conditions sont réunis, l'état de la sortie est égale à "cloturée"
+
+        //---si le nombre de partipant est égale au nombre maximum d"inscription, l'état de la sortie est égale à fermee
+
         for ($sortie = 0;  $sortie <= count($sorties)-1; $sortie++){
-            if ($sorties[$sortie]->getDateLimiteInscription() >= date("Y-m-d H:i:s")){
+
+            if ( ($datenow  >= $sorties[$sortie]->getDateLimiteInscription())
+                and $sorties[$sortie]->getEtat() != $etatRepo->find(6)){
+                $sorties[$sortie]->setEtat($etatRepo->find(8));
+            };
+
+            if (count($sorties[$sortie]->getParticipants()) == $sorties[$sortie]->getNbInscriptionMax()){
                 $sorties[$sortie]->setEtat($etatRepo->find(3));
             }
         }
