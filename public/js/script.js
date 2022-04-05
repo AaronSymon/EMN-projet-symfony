@@ -1,10 +1,10 @@
 function modifier(n) {
     var label = document.getElementById("labelSite"+n);
-    label.style.display = "none";
+    label.innerHTML="(ENTER to valid)";
     let cell = document.getElementById("colNom"+n);
     var form = document.createElement("form");
     form.setAttribute("method", "post");
-    form.setAttribute("id", "formModif")
+    form.setAttribute("id", "formModif");
     var change = document.createElement("input");
     change.setAttribute("type", "text");
     change.setAttribute("name", "newNom");
@@ -21,6 +21,7 @@ function modifier(n) {
             document.getElementById('formModif').form.submit();
         }
     }
+    document.getElementById("btnModif"+n).style.display = "none";
 }
 
 function afficher(){

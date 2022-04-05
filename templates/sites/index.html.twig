@@ -16,7 +16,8 @@
        <tbody>
        {% set i=0 %}
        {% for site in sites %}{% set i=i+1 %}
-           <tr><td id="colNom{{ i }}"><label id="labelSite{{ i }}">{{ site.nom }}</label></td><td><form name="formGes" method="post"> <input type="hidden" id="SiteNom{{ i }}" name="siteNom" value="{{ site.nom }}"><label id="btnGesSite" onclick="modifier({{ i }})">Modifier</label> <input type="submit" id="btnGesSite" value="Supprimer"></form></td></tr>
+           <tr><td id="colNom{{ i }}"><label id="labelSite{{ i }}">{{ site.nom }}</label></td>
+               <td><form name="formGes" method="post"> <input type="hidden" id="SiteNom{{ i }}" name="siteNom" value="{{ site.nom }}"><label class="btnGesSite" id="btnModif{{ i }}" onclick="modifier({{ i }})">Modifier</label><label class="btnGesSiteA" id="btnValid{{ i }}" onclick="valider()">Valider</label> <input type="submit" class="btnGesSite" value="Supprimer"></form></td></tr>
        {% endfor %}
        <tr><td><form name="formAddSite" id="formAddSite" method="post"><input type="text" name="nomAdd"></form></td><td><input type="submit" id="btnGesSite" form="formAddSite" value="Ajouter"></td></tr>
        </tbody>
