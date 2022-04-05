@@ -23,25 +23,34 @@
         </thead>
         <tbody>
         {% for sortie in mesSorties %}
-            <td>{{ sortie.nom }}</td>
-            <td>{{ sortie.dateHeureDebut|date("d-m-Y") }}</td>
-            <td>{{ sortie.duree }}</td>
-            <td>{{ sortie.dateLimiteInscription|date("d-m-Y") }}</td>
-            <td>{{ sortie.nbInscriptionMax }}</td>
-            <td>{{ sortie.infosSortie }}</td>
-            <td><ul>
-                    {% for participant in sortie.participants %}
-                        <li>{{ participant.pseudo }}</li>
-                    {% endfor %}
-                </ul></td>
-            <td>{{ sortie.etat.libelle }}</td>
-            <td>{{ sortie.SortieLieu.nom }}</td>
 
+        <td>{{ sortie.nom }}</td>
+        <td>{{ sortie.dateHeureDebut|date("d-m-Y") }}</td>
+        <td>{{ sortie.duree }}</td>
+        <td>{{ sortie.dateLimiteInscription|date("d-m-Y") }}</td>
+        <td>{{ sortie.nbInscriptionMax }}</td>
+        <td>{{ sortie.infosSortie }}</td>
+        <td>
+            <ul>
+                {% for participant in sortie.participants %}
+                    <li>{{ participant.pseudo }}</li>
+                {% endfor %}
+            </ul>
+        </td>
+        <td>{{ sortie.etat.libelle }}</td>
+        <td>{{ sortie.SortieLieu.nom }}</td>
+
+        {# Si l'état de la sortie est différent à "Annuler, l'on fait apparaitre les boutons "Modifier" et "Annuler" #}
         {% if (sortie.etat.libelle != "Annulee") %}
             <td><a href="{{ path('app_modifier_sortie',{id:sortie.id }) }}">Modifier</a></td>
             <td><a href="{{ path('app_annuler_sortie',{id:sortie.id }) }}">Annuler</a></td>
 
-            {% else %}
+            {# Si l'état de la sortie est égale à "Creee", l'on permet à l'utilisateur de la publier. Son état devient alors
+                "Ouverte" #}
+            {% if (sortie.etat.libelle == "Creee") %}
+                <td><a href="{{ path('app_sortie-publication',{id:sortie.id }) }}">Publier sortie</a></td>
+            {% endif %}
+        {% else %}
 
             <td><span>sortie annulée</span></td>
 

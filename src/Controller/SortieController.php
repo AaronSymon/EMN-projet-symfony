@@ -33,24 +33,57 @@ class SortieController extends AbstractController
 
 
 
-        //Pour chaque sorties en BDD, à chaque fois que l'on affiche la liste, l'on verifie :
-        //
-        // ---si la datetime de maintenant est supérieur ou égale à la date limite des inscriptions,
-        //si l'état de la sortie est différent de "Annulee".
-        //Si ces conditions sont réunis, l'état de la sortie est égale à "cloturée"
-
-        //---si le nombre de partipant est égale au nombre maximum d"inscription, l'état de la sortie est égale à fermee
+        //Pour chaque sorties en BDD, à chaque fois que l'on affiche la liste, l'on verifie
 
         for ($sortie = 0;  $sortie <= count($sorties)-1; $sortie++){
 
+            // ---si la datetime de maintenant est supérieur ou égale à la date limite des inscriptions,
+            //si l'état de la sortie est différent de "Annulee".
+            //Si ces conditions sont réunis, l'état de la sortie est égale à "Fermee"
             if ( ($datenow  >= $sorties[$sortie]->getDateLimiteInscription())
                 and $sorties[$sortie]->getEtat() != $etatRepo->findOneBy(["libelle"=>"Annulee"])){
-                $sorties[$sortie]->setEtat($etatRepo->findOneBy(["libelle"=>"Annulee"]));
+                $sorties[$sortie]->setEtat($etatRepo->findOneBy(["libelle"=>"Fermee"]));
             };
 
-            if (count($sorties[$sortie]->getParticipants()) == $sorties[$sortie]->getNbInscriptionMax()){
+            //---si le nombre de partipant est égale au nombre maximum d"inscriptions,
+            //et si l'état de la sortie est différent d'annuler
+            // l'état de la sortie est égale à "Cloturee"
+            if (count($sorties[$sortie]->getParticipants()) == $sorties[$sortie]->getNbInscriptionMax()
+            and $sorties[$sortie]->getEtat() != $etatRepo->findOneBy(["libelle"=>"Annulee"])){
                 $sorties[$sortie]->setEtat($etatRepo->findOneBy(["libelle"=>"Cloturee"]));
             }
+
+            //---si l'état de la sortie est égale à "Cloturee" et si le nombre de participant est inférieur au nombre maximum
+            //d'inscription, l'état de la sortie est égale "Ouverte".
+
+            if ((count($sorties[$sortie]->getParticipants()) < $sorties[$sortie]->getNbInscriptionMax())
+            and ($sorties[$sortie]->getEtat() == $etatRepo->findOneBy(["libelle"=>"Cloturee"]))){
+                $sorties[$sortie]->setEtat($etatRepo->findOneBy(["libelle"=>"Ouverte"]));
+            }
+
+            //---Si la dateTime now est inclut dans date début activité et date début activité plus durée
+            // l'état de la sortie est égale à "Activité en cours"
+
+            //La duree est *60 pour être traitée en tant que minutes
+
+            if (($datenow->getTimestamp() >= $sorties[$sortie]->getDateHeureDebut()->getTimestamp())
+            and ($datenow->getTimestamp() <= $sorties[$sortie]->getDateHeureDebut()->getTimestamp() + ($sorties[$sortie]->getDuree()*60))){
+                $sorties[$sortie]->setEtat($etatRepo->findOneBy(["libelle"=>"Activite en cours"]));
+            }
+
+            //---Si le dateTime now est supérieur à date début évenement + durée,
+            //si l'état actuel de la sortie est différent de annulée alors l'état de la sortie est égale
+            // à "Passee"
+
+            //La duree est *60 pour être traitée en tant que minutes
+
+            if ($datenow->getTimestamp() >= $sorties[$sortie]->getDateHeureDebut()->getTimestamp() + ($sorties[$sortie]->getDuree()*60)
+            and $sorties[$sortie]->getEtat() != $etatRepo->findOneBy(["libelle"=>"Annulee"]) ){
+                $sorties[$sortie]->setEtat($etatRepo->findOneBy(["libelle"=>"Passee"]));
+            }
+
+            $sortieRepo->add($sorties[$sortie],true);
+
         }
 
         return $this->render('sortie/listeSorties.html.twig', compact("sorties"));
@@ -102,6 +135,23 @@ class SortieController extends AbstractController
     }
 
     /**
+     * @Route("/publier-sortie/{id}", name="app_sortie-publication")
+     */
+    public function publierSorties(EtatRepository $etatRepo, SortieRepository $sortieRepo, $id): Response
+    {
+        //Récupération de la sortie à publier
+        $sortieAPublier = $sortieRepo->find($id);
+
+        //Modification de l'état de la sortie à Publier. Passe de "Creee" à "Ouverte"
+        $sortieAPublier->setEtat($etatRepo->findOneBy(["libelle"=>"Ouverte"]));
+
+        //Modification de l'état de la sortie en base de données
+        $sortieRepo->add($sortieAPublier,true);
+
+        return $this->redirectToRoute('app_sortie_afficher', compact("sortieAPublier"));
+    }
+
+    /**
      * @Route("/modifier-sortie/{id}", name="app_modifier_sortie")
      */
     public function modifierSorties(LieuRepository $lieuRepo, SortieRepository $sortieRepo, $id, Request $request): Response
@@ -144,7 +194,7 @@ class SortieController extends AbstractController
 
         if ($sortieAAnnulerForm->isSubmitted() && $sortieAAnnulerForm->isValid()){
 
-            $sortieAAnnuler->setEtat($etatRepo->find(6));
+            $sortieAAnnuler->setEtat($etatRepo->findOneBy(["libelle"=>"Annulee"]));
 
             $sortieRepo->add($sortieAAnnuler);
 
@@ -192,4 +242,6 @@ class SortieController extends AbstractController
 
         return $this->redirectToRoute('app_sortie_afficher', compact("annulerSortieInscription"));
     }
+
+
 }
