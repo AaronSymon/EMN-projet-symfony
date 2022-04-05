@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil de {{ profil.pseudo }}{% endblock %}
+
+{% block main %}
+<h3>{{ profil.pseudo }}</h3>
+    <div class="divProfil">
+        <div id="photoProfil"><img src="" alt=""></div>
+        <div id="infoProfil">
+            <label id="labelProfil">Prénom :</label><span>{{ profil.prenom }}</span><br>
+            <label id="labelProfil">Nom :</label><span>{{ profil.nom }}</span><br>
+            <label id="labelProfil">Téléphone :</label><span>{{ profil.telephone }}</span><br>
+            <label id="labelProfil">Mail :</label><span>{{ profil.email }}</span><br>
+            <label id="labelProfil">Site :</label><span>{{ profil.siteRatache.nom }}</span><br>
+        </div>
+    </div>
+    <a href="{{ path('app_accueil') }}" id="RetourProfil">
+        <button>Retour</button></a>
+{% endblock %}
