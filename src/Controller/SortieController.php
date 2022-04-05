@@ -44,12 +44,12 @@ class SortieController extends AbstractController
         for ($sortie = 0;  $sortie <= count($sorties)-1; $sortie++){
 
             if ( ($datenow  >= $sorties[$sortie]->getDateLimiteInscription())
-                and $sorties[$sortie]->getEtat() != $etatRepo->find(6)){
-                $sorties[$sortie]->setEtat($etatRepo->find(8));
+                and $sorties[$sortie]->getEtat() != $etatRepo->findOneBy(["libelle"=>"Annulee"])){
+                $sorties[$sortie]->setEtat($etatRepo->findOneBy(["libelle"=>"Annulee"]));
             };
 
             if (count($sorties[$sortie]->getParticipants()) == $sorties[$sortie]->getNbInscriptionMax()){
-                $sorties[$sortie]->setEtat($etatRepo->find(3));
+                $sorties[$sortie]->setEtat($etatRepo->findOneBy(["libelle"=>"Cloturee"]));
             }
         }
 

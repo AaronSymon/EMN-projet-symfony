@@ -179,6 +179,10 @@ table tr:nth-child(even){
     width: 50px;
 }
 
+body{
+    min-height: 100%;
+}
+
 #foot{
     position:fixed;
     bottom: 0;
