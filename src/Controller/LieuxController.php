@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Lieu;
+use App\Entity\Ville;
 use App\Repository\LieuRepository;
 use App\Repository\VilleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,7 +18,7 @@ class LieuxController extends AbstractController
      */
     public function index(Request $request, LieuRepository $lieuRepo, VilleRepository $villeRepo): Response
     {
-        $nom="";
+        $nom=""; $error=0;
         $lieux = $lieuRepo->findAll();
         $villes = $villeRepo->findAll();
 
@@ -31,15 +32,29 @@ class LieuxController extends AbstractController
                 $newLieu->setRue($request->request->get("Rue"));
                 $newLieu->setLatitude($request->request->get("Lat"));
                 $newLieu->setLongitude($request->request->get("Long"));
-                $newLieu->setVille($villeRepo->findOneBy(["nom" => $request->request->get("ville")]));
-                $lieuRepo->add($newLieu);
+                if($request->request->get("nomV") != ""){ //ajoute une nouvelle ville
+                    $villeAjout = new Ville();
+                    $villeAjout->setNom($request->request->get("nomV"));
+                    $villeAjout->setCodePostal($request->request->get("cp"));
+                    $villeRepo->add($villeAjout);
+                    $newLieu->setVille($villeAjout);
+                    $lieuRepo->add($newLieu);
+                } elseif($request->request->get("ville") != "") { //a sélectionné une ville existante
+                    $newLieu->setVille($villeRepo->findOneBy(["nom" => $request->request->get("ville")]));
+                    $lieuRepo->add($newLieu);
+                } else {
+                    $error = 1;
+                }
+
+
                 $lieux = $lieuRepo->findAll();
             }
         }
 
         return $this->render('lieux/index.html.twig', [
             "lieux" => $lieux,
-            "villes" => $villes
+            "villes" => $villes,
+            "error" => $error
         ]);
     }
 }

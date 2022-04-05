@@ -28,28 +28,32 @@
         <form method="post" name="formAjout" id="formAjoutLieu">
             <div>
                 <label id="lbLieu" for="Nom">Nom du lieu :</label>
-                <input type="text" name="Nom">
+                <input type="text" name="Nom" required>
 
                 <label id="lbLieu" for="Rue">Adresse :</label>
-                <input type="text" name="Rue">
+                <input type="text" name="Rue" required>
             </div>
             <div>
                 <label id="lbLieu" for="Lat">Latitude :</label>
-                <input type="text" name="Lat">
+                <input type="number" name="Lat" step="any" min="-90" max="90">
 
                 <label id="lbLieu" for="Long">Longitude :</label>
-                <input type="text" name="Long">
+                <input type="number" name="Long" step="any" min="-90" max="90">
             </div>
-            <div><select name="ville" id="selVille">
+            <div id="divSelVille"><select name="ville" id="selVille">
                     <option value=""></option>
                     {% for ville in villes %}
                     <option value="{{ ville.nom }}">{{ ville.nom }}</option>
                     {% endfor %}
                 </select>
-                {%  if is_granted("ROLE_ADMIN") %}
-                <a href="{{ path('app_ville_index') }}">Ajouter une ville</a>
-                {% endif %}
+                <label id="btnAjoutVille" onclick="afficherAjout()">Ajouter une ville</label>
             </div>
+            <div id="divCreaVille">
+                    <label id="lbLieu" for="cp">Code Postal :</label><input type="number" id="cp" name="cp" min="10000" max="99999">
+                    <label id="lbLieu" for="nomV">Ville :</label><input type="text" id="nomV" name="nomV">
+                    <label id="btnAjoutVille" onclick="masquerAjout()">Annuler ajout d'une ville</label>
+            </div>
+
             <div id="btnAjoutLieu">
                 <input type="submit" value="Ajouter">
 
@@ -57,4 +61,7 @@
             </div>
         </form>
     </div>
+    {% if error == 1 %}
+        <p id="error">UNE VILLE DOIT ETRE SAISIE</p>
+    {% endif %}
 {% endblock %}

@@ -231,7 +231,7 @@ h3{
     margin-left: 15%;
 }
 
-.btnGesSite, .btnGesSiteA{
+.btnGesSite, .btnGesSiteA, #btnAjoutVille{
     border: none;
     outline: none;
     background: none;
@@ -315,6 +315,15 @@ h3{
 
 #lbLieu{
     width: 100px;
+}
+
+#divCreaVille{
+    display: none;
+}
+
+#error{
+    color: red;
+    margin-left: 15%;
 }
 
 /* Affichage Profil */
