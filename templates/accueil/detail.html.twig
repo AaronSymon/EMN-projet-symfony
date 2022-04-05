@@ -23,6 +23,7 @@
                 <div><label id="Detail">Latitude :</label> <span>{{ sortie.SortieLieu.latitude }}</span></div>
                 <div><label id="Detail">Longitude :</label> <span>{{ sortie.SortieLieu.longitude }}</span></div>
         </div>
+        {% if(app.user == sortie.organisateur) %}
         <div id="break"></div>
         <div id="listeParticipant">
             <p id="DetailP">Liste des participants</p>
@@ -31,10 +32,11 @@
                 <tr><th>Pseudo</th><th>Nom</th></tr></thead>
                 <tbody>
                 {% for participant in sortie.participants %}
-                <tr><td>{{ participant.pseudo }}</td><td>{{ participant.nom }} {{ participant.prenom }}</td></tr>
+                <tr><td><a href="{{ path('app_profil',{id:participant.id}) }}">{{ participant.pseudo }}</a></td><td>{{ participant.nom }} {{ participant.prenom }}</td></tr>
                 {% endfor %}
                 </tbody>
             </table>
         </div>
+        {% endif %}
     </div>
 {% endblock %}
