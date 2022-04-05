@@ -90,7 +90,11 @@ class SortieRepository extends ServiceEntityRepository
             $querybuild->andWhere("(:user NOT MEMBER OF so.participants and e.libelle !='Creee') or so.organisateur = :user");
         }
         if($organisateur!="on" and $participateur!="on" and $nonparticipant!="on"){
-            $querybuild->andWhere("e.libelle = 'Creee' and e.libelle != 'Creee'");
+            if($past!="on"){
+                $querybuild->andWhere("e.libelle = 'Creee' and e.libelle != 'Creee'");
+            } else {
+                $querybuild->andWhere("e.libelle = 'Passee'");
+            }
         }
         if($organisateur=="on" or $participateur=="on" or $nonparticipant=="on") {
             $querybuild->setParameter("user", $user);
