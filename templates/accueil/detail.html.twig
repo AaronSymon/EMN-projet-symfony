@@ -28,8 +28,7 @@
         <div id="listeParticipant">
             <p id="DetailP">Liste des participants</p>
             <table class="tablePSortie">
-                <thead>
-                <tr><th>Pseudo</th><th>Nom</th></tr></thead>
+                <thead><tr><th>Pseudo</th><th>Nom</th></tr></thead>
                 <tbody>
                 {% for participant in sortie.participants %}
                 <tr><td><a href="{{ path('app_profil',{id:participant.id}) }}">{{ participant.pseudo }}</a></td><td>{{ participant.nom }} {{ participant.prenom }}</td></tr>
