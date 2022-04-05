@@ -1,3 +1,4 @@
+/*ALL PAGES*/
 #infoNow{
     text-align: right;
     margin-right: 50px;
@@ -9,6 +10,54 @@ h2{
     margin-left: 50px;
     margin-top: 25px;
 }
+
+#logo{
+    height: 50px;
+    width: 72px;
+}
+
+main{
+    margin-bottom:150px;
+}
+
+table tr:nth-child(even){
+    background-color: #E8E8E8;
+}
+
+#foot{
+    position:fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: black;
+    color : white;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#contact{
+    display: flex;
+    width: 15%;
+    align-items: center;
+    justify-content: center;
+}
+
+#contact h5{
+    font-size: 25px;
+}
+
+#contact-info li{
+    list-style: none;
+    width: 85%;
+}
+
+#copy{
+    background-color: rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 100%;
+    height: 25px;
+}
+
+/* ------------- Page Accueil ------------- */
 
 #filtreDiv{
     margin-bottom: 50px;
@@ -86,7 +135,7 @@ h2{
     text-decoration: none;
 }
 
-/*page Profil*/
+/* ------------- page Profil ------------- */
 h3{
     margin: 50px 300px;
     font-size: 35px;
@@ -116,7 +165,7 @@ h3{
     width: 50px;
 }
 
-/*page detail sortie*/
+/* ------------- page detail sortie ------------- */
 #divSortie{
     display: flex;
     flex-wrap: wrap;
@@ -175,7 +224,23 @@ h3{
     background-color: lightgrey;
 }
 
-/*page gestion sites*/
+/* ------------- page gestion sites ------------- */
+
+#filterSite{
+    margin-bottom: 10px;
+    margin-left: 15%;
+}
+
+#btnGesSite{
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+    color: #0000EE;
+    padding: 0;
+    font-family: inherit;
+    font-size: inherit;
+}
 
 .tableAdmin{
     margin-left: 15%;
@@ -199,6 +264,8 @@ h3{
 .tableAdmin a{
     text-decoration: none;
 }
+
+/* ------------- Page gestion Lieu ------------- */
 
 .tableLieu{
     margin-left: 15%;
@@ -246,64 +313,10 @@ h3{
     width: 100px;
 }
 
-table tr:nth-child(even){
-    background-color: #E8E8E8;
-}
+/* Affichage Profil */
 
-#filterSite{
+#labelProfil{
+    font-weight: bold;
     margin-bottom: 10px;
-    margin-left: 15%;
-}
-
-#btnGesSite{
-    border: none;
-    outline: none;
-    background: none;
-    cursor: pointer;
-    color: #0000EE;
-    padding: 0;
-    font-family: inherit;
-    font-size: inherit;
-}
-
-#logo{
-    height: 50px;
-    width: 72px;
-}
-
-main{
-    margin-bottom:150px;
-}
-
-#foot{
-    position:fixed;
-    bottom: 0;
-    width: 100%;
-    background-color: black;
-    color : white;
-    display: flex;
-    flex-wrap: wrap;
-}
-
-#contact{
-    display: flex;
-    width: 15%;
-    align-items: center;
-    justify-content: center;
-}
-
-#contact h5{
-    font-size: 25px;
-}
-
-#contact-info li{
-    list-style: none;
-    width: 85%;
-}
-
-#copy{
-    background-color: rgba(0, 0, 0, 0.2);
-    text-align: center;
-    width: 100%;
-    height: 25px;
+    width: 100px;
 }
