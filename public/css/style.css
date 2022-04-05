@@ -63,6 +63,36 @@ h2{
     height: 50px;
 }
 
+/*page Profil*/
+h3{
+    margin: 50px 300px;
+    font-size: 35px;
+}
+
+.divProfil{
+    display: flex;
+}
+
+#photoProfil{
+    width: 200px;
+    height: 200px;
+}
+
+#infoProfil{
+    margin-bottom: 20px;
+}
+
+#labelProfil{
+    width: 100px;
+    margin-bottom: 20px;
+}
+
+#RetourProfil{
+    display: block;
+    margin-left: 300px;
+    width: 50px;
+}
+
 .tableSortie{
     margin:auto;
     width: 90%;
@@ -176,7 +206,7 @@ table tr:nth-child(even){
 
 #logo{
     height: 50px;
-    width: 50px;
+    width: 72px;
 }
 
 main{

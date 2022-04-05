@@ -82,7 +82,11 @@
                         {{ i }}/{{ sortie.nbInscriptionMax }}</td>
                     <td>{{ sortie.etat.libelle }}</td>
                     <td>{% if inscrit == 1 %} X {% endif %}</td>
-                    <td>{{ sortie.organisateur.pseudo }}</td>
+                    {% if app.user %}
+                        <td><a href="{{ path('app_profil',{id:sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a></td>
+                    {% else %}
+                        <td>{{ sortie.organisateur.pseudo }}</td>
+                    {% endif %}
                     <td>{% if sortie.organisateur.id == app.user.id %}
                             {% if sortie.etat.libelle == "Creee" %}<a href="{{ path('app_modifier_sortie',{id:sortie.id }) }}">Modifier</a> Publier
                             {% elseif sortie.etat.libelle == "Ouverte" or sortie.etat.libelle == "Fermee" %}<a href="{{ path('app_annuler_sortie',{id:sortie.id }) }}">Annuler</a>{% endif %}
