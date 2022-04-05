@@ -68,7 +68,7 @@
             <tbody>
             {% for sortie in sorties %}
             <tr>
-                <td><a href="#{# path() #}">{{ sortie.nom }}</a></td>
+                <td><a href="{{ path('app_accueil_sortie',{id:sortie.id}) }}">{{ sortie.nom }}</a></td>
                 <td>{{ sortie.dateHeureDebut|date("d-m-Y H:i") }}</td>
                 <td>{{ sortie.dateLimiteInscription|date("d-m-Y") }}</td>
                 {% if app.user %}

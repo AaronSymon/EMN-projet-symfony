@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sortie {{ sortie.nom }}{% endblock %}
+
+{% block main %}
+    <h3>Details de la sortie</h3>
+    <div id="divSortie">
+        <div id="infoSortie">
+            <div><label id="labelDetailS">Nom de la sortie :</label> <span>{{ sortie.nom }}</span></div>
+            <div><label id="labelDetailS">Date/Heure de la sortie :</label> <span>{{ sortie.dateHeureDebut|date("d-m-Y H:i") }}</span></div>
+            <div><label id="labelDetailS">Dame limite d'inscription :</label> <span>{{ sortie.dateLimiteInscription|date("d-m-Y") }}</span></div>
+            <div><label id="labelDetailS">Nombre de places :</label> <span>{{ sortie.nbInscriptionMax }}</span></div>
+            <div><label id="labelDetailS">Durée :</label> <span>{{ sortie.duree }} minutes</span></div>
+            <div><label id="labelDetailS">Description/Infos :</label> <span>{{ sortie.infosSortie }}</span></div>
+        </div>
+        <div id="infoSupSortie">
+            <div><label id="labelSupDetailS">Site :</label> <span>{{ sortie.site.nom }}</span></div>
+            <div><label id="labelSupDetailS">Lieu :</label> <span>{{ sortie.SortieLieu.nom }}</span></div>
+            <div><label id="Detail">Adresse :</label> <p>{{ sortie.SortieLieu.rue }}
+                {{ sortie.SortieLieu.ville.codePostal }}
+                {{ sortie.SortieLieu.ville.nom }}</p></div>
+            <p id="Detail">Coord GPS :</p>
+                <div><label id="Detail">Latitude :</label> <span>{{ sortie.SortieLieu.latitude }}</span></div>
+                <div><label id="Detail">Longitude :</label> <span>{{ sortie.SortieLieu.longitude }}</span></div>
+        </div>
+        <div id="break"></div>
+        <div id="listeParticipant">
+            <p id="DetailP">Liste des participants</p>
+            <table class="tablePSortie">
+                <thead>
+                <tr><th>Pseudo</th><th>Nom</th></tr></thead>
+                <tbody>
+                {% for participant in sortie.participants %}
+                <tr><td>{{ participant.pseudo }}</td><td>{{ participant.nom }} {{ participant.prenom }}</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

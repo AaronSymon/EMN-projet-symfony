@@ -60,4 +60,15 @@ class AccueilController extends AbstractController
             "sorties" => $sorties
         ]);
     }
+
+    /**
+     * @Route("/sortie/{id}", name="app_accueil_sortie")
+     */
+    public function afficherSortie($id, SortieRepository $sortieRepo){
+        $sortie = $sortieRepo->find($id);
+
+        return $this->render('accueil/detail.html.twig', [
+            "sortie"=>$sortie
+        ]);
+    }
 }
