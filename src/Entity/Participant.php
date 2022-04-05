@@ -95,11 +95,6 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $siteRatache;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $image;
-
     public function __construct()
     {
         $this->sorties = new ArrayCollection();
