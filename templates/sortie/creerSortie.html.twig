@@ -4,6 +4,14 @@
 
 {% block main %}
 
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
+
     {{ form(sortieForm) }}
+    
+    <button><a href=" {{ path('app_lieux') }}">Ajouter un lieu</a></button>
 
 {% endblock %}

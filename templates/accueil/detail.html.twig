@@ -5,7 +5,7 @@
 {% block main %}
     <h3>Details de la sortie</h3>
     {% if sortie.etat.libelle == "Annulee" %}
-        <div><label id="labelDetailS"></label><span>{{ sortie.motifAnnulation }}</span></div>
+        <div><label id="labelAnnulation">Motif de l'annulation :</label><span>{{ sortie.motifAnnulation }}</span></div>
     {% endif %}
     <div id="divSortie">
         <div id="infoSortie">
