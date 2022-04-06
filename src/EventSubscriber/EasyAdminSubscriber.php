@@ -82,6 +82,11 @@ class EasyAdminSubscriber implements EventSubscriberInterface
     public function setPassword(Participant $entity): void
     {
         $pass = $entity->getPassword();
+        if($entity->getAdministrateur()){
+            $entity->setRoles(array('ROLE_ADMIN'));
+        } else {
+            $entity->setRoles(array('ROLE_USER'));
+        }
 
         $entity->setPassword(
             $this->passwordEncoder->hashPassword(

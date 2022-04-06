@@ -49,6 +49,7 @@ class ParticipantCrudController extends AbstractCrudController
             TextField::new('nom'),
             TextField::new('prenom'),
             EmailField::new('email'),
+            TextField::new('telephone'),
             TextField::new('password')->setFormType(PasswordType::class)->hideOnIndex(),
             ImageField::new('photo')
                 ->setBasePath(' uploads/')
