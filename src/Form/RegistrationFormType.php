@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -30,7 +31,16 @@ class RegistrationFormType extends AbstractType
             ->add('nom')
             ->add('telephone')
             ->add('email')
-
+            ->add('photo', FileType::class, [
+                'label' => 'photoFile',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '5M',
+                    ])
+                ],
+            ])
 
 
             ->add('siteRatache',EntityType::class,[

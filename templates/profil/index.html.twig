@@ -12,6 +12,15 @@
             <label id="labelProfil">Téléphone :</label><span>{{ profil.telephone }}</span><br>
             <label id="labelProfil">Mail :</label><span>{{ profil.email }}</span><br>
             <label id="labelProfil">Site :</label><span>{{ profil.siteRatache.nom }}</span><br>
+
+            <div class="card" style="width: 18rem;">
+                <img src="{{ profil.photo }}" class="card-img-top" alt="...">
+
+            </div>
+
+
+
+
         </div>
     </div>
     <a href="{{ path('app_accueil') }}" id="RetourProfil">
