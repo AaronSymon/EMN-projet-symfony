@@ -88,10 +88,11 @@
                         <td>{{ sortie.organisateur.pseudo }}</td>
                     {% endif %}
                     <td>{% if sortie.organisateur.id == app.user.id %}
-                            {% if sortie.etat.libelle == "Creee" %}<a href="{{ path('app_modifier_sortie',{id:sortie.id }) }}">Modifier</a> Publier
-                            {% elseif sortie.etat.libelle == "Ouverte" or sortie.etat.libelle == "Fermee" %}<a href="{{ path('app_annuler_sortie',{id:sortie.id }) }}">Annuler</a>{% endif %}
-                        {% elseif inscrit == 1 %} Se désister
-                        {% elseif(sortie.etat.libelle != "Passee") %}<a href="{{ path('app_sortie-inscription', {id:sortie.id}) }}">S'inscrire</a>{% endif %}</td>
+                            {% if sortie.etat.libelle == "Creee" %}<a href="{{ path('app_modifier_sortie',{id:sortie.id }) }}">Modifier</a>
+                                <a href="{{ path('app_acceuil_publi',{id:sortie.id }) }}">Publier</a>
+                            {% elseif sortie.etat.libelle == "Ouverte" or sortie.etat.libelle == "Fermee" %}<a href="{{ path('app_accueil_annul',{id:sortie.id }) }}">Annuler</a>{% endif %}
+                        {% elseif inscrit == 1 %} <a href="{{ path('app_accueil_desist',{id:sortie.id}) }}">Se désister</a>
+                        {% elseif(sortie.etat.libelle != "Passee") %}<a href="{{ path('app_accueil_inscri', {id:sortie.id}) }}">S'inscrire</a>{% endif %}</td>
                 {% endif %}
             </tr>{% endfor %}
             </tbody>

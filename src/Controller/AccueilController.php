@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Form\AnnulerSortieType;
 use App\Repository\EtatRepository;
 use App\Repository\ParticipantRepository;
 use App\Repository\SiteRepository;
@@ -70,7 +71,7 @@ class AccueilController extends AbstractController
             //d'inscription, l'état de la sortie est égale "Ouverte".
 
             if ((count($sortie->getParticipants()) < $sortie->getNbInscriptionMax())
-                and ($sortie->getEtat() == $etatRepo->findOneBy(["libelle"=>"Cloturee"]))){
+                and ($sortie->getEtat() == $etatRepo->findOneBy(["libelle"=>"Fermee"]))){
                 $sortie->setEtat($etatRepo->findOneBy(["libelle"=>"Ouverte"]));
             }
 
@@ -127,5 +128,87 @@ class AccueilController extends AbstractController
         return $this->render('accueil/detail.html.twig', [
             "sortie"=>$sortie
         ]);
+    }
+
+    /**
+     * @Route("/sortie/publication/{id}", name="app_acceuil_publi")
+     */
+    public function publierSorties(EtatRepository $etatRepo, SortieRepository $sortieRepo, $id): Response
+    {
+        //Récupération de la sortie à publier
+        $publi = $sortieRepo->find($id);
+
+        //Modification de l'état de la sortie à Publier. Passe de "Creee" à "Ouverte"
+        $publi->setEtat($etatRepo->findOneBy(["libelle"=>"Ouverte"]));
+
+        //Modification de l'état de la sortie en base de données
+        $sortieRepo->add($publi);
+
+        return $this->redirectToRoute('app_accueil');
+    }
+
+    /**
+     * @Route("/sortie/annuler/{id}", name="app_accueil_annul")
+     */
+    public function annulerSorties(EtatRepository $etatRepo, SortieRepository $sortieRepo, $id, Request $request): Response
+    {
+
+        //Recuperation de la sortie à annuler
+        $annule = $sortieRepo->find($id);
+
+        //Creation d'un formulaire pour saisir motif annulation sortie
+
+        $AnnulerForm = $this->createForm(AnnulerSortieType::class,$annule);
+        $AnnulerForm->handleRequest($request);
+
+        if ($AnnulerForm->isSubmitted() && $AnnulerForm->isValid()){
+
+            $annule->setEtat($etatRepo->findOneBy(["libelle"=>"Annulee"]));
+
+            $sortieRepo->add($annule);
+
+            return $this->redirectToRoute('app_accueil');
+        }
+
+        return $this->render('sortie/annulerSortie.html.twig',[
+            "sortieAAnnulerForm"=>$AnnulerForm->createView(),
+            "sortieAAnnuler"=>$annule
+        ]);
+    }
+
+    /**
+     * @Route("/sortie/inscription/{id}", name="app_accueil_inscri")
+     */
+    public function sinscrireSortie(SortieRepository $sortieRepo, $id): Response
+    {
+        //Récupération de la sortie où s'inscrire
+        $sortieInscription = $sortieRepo->find($id);
+
+        //Ajout du participant à la liste des personnes inscrite
+        $sortieInscription->addParticipant($this->getUser());
+
+        //Ajout du participant à la Base de données
+        $sortieRepo->add($sortieInscription,true);
+
+        return $this->redirectToRoute('app_accueil', compact("sortieInscription"));
+    }
+
+    /**
+     * @Route("/sortie/desister/{id}", name="app_accueil_desist")
+     */
+    public function seDesister(SortieRepository $sortieRepo, $id): Response
+    {
+        //Récupération de la sortie où s'inscrire
+        $desist = $sortieRepo->find($id);
+
+        //Suppression du participant
+
+        $desist->removeParticipant($this->getUser());
+
+        //Suppression du participant dans la  base de données
+
+        $sortieRepo->add($desist);
+
+        return $this->redirectToRoute('app_accueil');
     }
 }
