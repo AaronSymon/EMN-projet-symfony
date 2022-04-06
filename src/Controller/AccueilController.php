@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\EtatRepository;
 use App\Repository\ParticipantRepository;
 use App\Repository\SiteRepository;
 use App\Repository\SortieRepository;
@@ -16,9 +17,10 @@ class AccueilController extends AbstractController
     /**
      * @Route("/", name="app_accueil")
      */
-    public function index(Request $request, SiteRepository $siteRepo, SortieRepository $sortieRepo, ParticipantRepository $userRepo): Response
+    public function index(Request $request, SiteRepository $siteRepo, SortieRepository $sortieRepo, ParticipantRepository $userRepo, EtatRepository $etatRepo): Response
     {
-        $user="";
+        date_default_timezone_set('Europe/Paris');
+        $user=""; $datenow = new \DateTime();
         if($this->isGranted("ROLE_USER")){
             $user = $userRepo->find($this->getUser()->getId());
             $siteC=$user->getSiteRatache()->getNom();
@@ -44,6 +46,61 @@ class AccueilController extends AbstractController
             if(!$this->isGranted("ROLE_USER")){ $ckNon="on"; } //liste toutes les sorties non passees quand non connecté
         }
 
+        //vérification des états
+        $all = $sortieRepo->findAll();
+        foreach ($all as $sortie){
+
+            // ---si la datetime de maintenant est supérieur ou égale à la date limite des inscriptions,
+            //si l'état de la sortie est différent de "Annulee".
+            //Si ces conditions sont réunis, l'état de la sortie est égale à "Fermee"
+            if ( ($datenow  >= $sortie->getDateLimiteInscription())
+                and $sortie->getEtat() != $etatRepo->findOneBy(["libelle"=>"Annulee"])){
+                $sortie->setEtat($etatRepo->findOneBy(["libelle"=>"Cloturee"]));
+            };
+
+            //---si le nombre de partipant est égale au nombre maximum d"inscriptions,
+            //et si l'état de la sortie est différent d'annuler
+            // l'état de la sortie est égale à "Cloturee"
+            if (count($sortie->getParticipants()) == $sortie->getNbInscriptionMax()
+                and $sortie->getEtat() != $etatRepo->findOneBy(["libelle"=>"Annulee"])){
+                $sortie->setEtat($etatRepo->findOneBy(["libelle"=>"Fermee"]));
+            }
+
+            //---si l'état de la sortie est égale à "Cloturee" et si le nombre de participant est inférieur au nombre maximum
+            //d'inscription, l'état de la sortie est égale "Ouverte".
+
+            if ((count($sortie->getParticipants()) < $sortie->getNbInscriptionMax())
+                and ($sortie->getEtat() == $etatRepo->findOneBy(["libelle"=>"Cloturee"]))){
+                $sortie->setEtat($etatRepo->findOneBy(["libelle"=>"Ouverte"]));
+            }
+
+            //---Si la dateTime now est inclut dans date début activité et date début activité plus durée
+            // l'état de la sortie est égale à "Activité en cours"
+
+            //La duree est *60 pour être traitée en tant que minutes
+
+            if (($datenow->getTimestamp() >= $sortie->getDateHeureDebut()->getTimestamp())
+                and ($datenow->getTimestamp() <= ($sortie->getDateHeureDebut()->getTimestamp() + ($sortie->getDuree()*60)))){
+                $sortie->setEtat($etatRepo->findOneBy(["libelle"=>"En cours"]));
+
+            }
+
+            //---Si le dateTime now est supérieur à date début évenement + durée,
+            //si l'état actuel de la sortie est différent de annulée alors l'état de la sortie est égale
+            // à "Passee"
+
+            //La duree est *60 pour être traitée en tant que minutes
+
+            if ($datenow->getTimestamp() >= $sortie->getDateHeureDebut()->getTimestamp() + ($sortie->getDuree()*60)
+                and $sortie->getEtat() != $etatRepo->findOneBy(["libelle"=>"Annulee"]) ){
+                $sortie->setEtat($etatRepo->findOneBy(["libelle"=>"Passee"]));
+            }
+
+            $sortieRepo->add($sortie);
+
+        }
+
+        //affichage
         $sorties = $sortieRepo->filtrer($siteC, $mot, $dateD, $dateF, $ckOrg, $ckIns, $ckNon, $ckPast, $user);
 
         return $this->render('accueil/accueil.html.twig', [
