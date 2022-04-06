@@ -4,14 +4,51 @@
 
 {% block main %}
 
+    <h3>Création d'une sortie</h3>
+
     {% for message in app.flashes('error') %}
         <div class="alert alert-danger">
             {{ message }}
         </div>
     {% endfor %}
 
-    {{ form(sortieForm) }}
-    
-    <button><a href=" {{ path('app_lieux') }}">Ajouter un lieu</a></button>
+    <div id="formSortie">
+    {{ form_start(sortieForm) }}
+        <div>
+            {{ form_row(sortieForm.nom) }}
+            {{ form_row(sortieForm.dateHeureDebut) }}
+            {{ form_row(sortieForm.duree) }}
+            {{ form_row(sortieForm.dateLimiteInscription) }}
+            {{ form_row(sortieForm.nbInscriptionMax) }}
+            {{ form_row(sortieForm.infosSortie) }}
+        </div>
+        <div>
+            <label id="labelDetailS">Ville organisatrice</label> <span>{{ app.user.siteRatache }}</span>
 
+            <div id="creaSortLieu"> {{ form_row(sortieForm.SortieLieu) }} <a href=" {{ path('app_lieux') }}"><button>Ajouter un lieu</button></a></div>
+            <label id="labelDetailS">Adresse</label>
+            <p id="pAdr"></p>
+            <label id="labelDetailS">Latitude</label> <span id="pLat"></span><br>
+            <label id="labelDetailS">Longitude</label> <span id="pLong"></span>
+        </div>
+        <div id="break"></div>
+        <div onload="details()">
+            {{ form_row(sortieForm.creerSortie) }}
+            {{ form_row(sortieForm.reset) }}
+        </div>
+        {{ form_end(sortieForm) }}</div>
+    
+
+<script>
+    function details(){
+        var select = document.getElementById("sortie_form_SortieLieu");
+        var value = select.options[select.selectedIndex].value;
+        var lieux = {{ lieux|json_encode }}
+        lieux.forEach((lieu)=>{
+            if(lieu == value){
+                document.getElementById("pAdr").innerHTML = lieu.rue+" " + lieu.ville.codePostal +" "+ lieu.ville.nom;
+            }
+        })
+    }
+</script>
 {% endblock %}

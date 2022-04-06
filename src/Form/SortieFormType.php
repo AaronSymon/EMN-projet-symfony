@@ -30,7 +30,7 @@ class SortieFormType extends AbstractType
                 },
                 'mapped'=>false,
                 'multiple'=>false,
-                'expanded'=>true
+                'expanded'=>false
             ])
             ->add('creerSortie',SubmitType::class, [
             ])

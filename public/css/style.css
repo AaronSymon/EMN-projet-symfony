@@ -332,10 +332,26 @@ h3{
     margin-left: 15%;
 }
 
-/* Affichage Profil */
+/* ------------- Affichage Profil ------------- */
 
 #labelProfil{
     font-weight: bold;
     margin-bottom: 10px;
     width: 100px;
+}
+
+/* ------------- Page Création Sortie ------------- */
+
+#formSortie > form{
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 150px;
+}
+
+#formSortie > form > div{
+    margin-right: 100px;
+}
+
+#creaSortLieu{
+    margin-bottom: 50px;
 }
