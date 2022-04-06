@@ -6,6 +6,7 @@ use App\Entity\Lieu;
 use App\Entity\Sortie;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,9 +18,9 @@ class SortieFormType extends AbstractType
     {
         $builder
             ->add('nom')
-            ->add('dateHeureDebut')
+            ->add('dateHeureDebut', DateTimeType::class)
             ->add('duree')
-            ->add('dateLimiteInscription')
+            ->add('dateLimiteInscription', DateTimeType::class)
             ->add('nbInscriptionMax')
             ->add('infosSortie')
             ->add('SortieLieu', EntityType::class,[
@@ -31,7 +32,8 @@ class SortieFormType extends AbstractType
                 'multiple'=>false,
                 'expanded'=>true
             ])
-            ->add('creerSortie',SubmitType::class)
+            ->add('creerSortie',SubmitType::class, [
+            ])
             ->add('reset',ResetType::class)
         ;
     }

@@ -82,6 +82,7 @@ class SortieController extends AbstractController
                 $sorties[$sortie]->setEtat($etatRepo->findOneBy(["libelle"=>"Passee"]));
             }
 
+            //L'on applique les changements d'état en base de données
             $sortieRepo->add($sorties[$sortie],true);
 
         }
@@ -106,17 +107,27 @@ class SortieController extends AbstractController
 
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()){
 
-            //definition des valeurs par defauts de Organisateur, site, etat, sortieLieu
-            $sortie->setOrganisateur($this->getUser());
-            $sortie->setSite($siteRepo->find($this->getUser()->getSiteRatache()));
-            $sortie->setEtat($etatRepo->find(1));
-            $sortie->setSortieLieu($lieuRepo->find($request->request->get('sortie_form')['SortieLieu']['0']));
-            //$sortie->setSortieLieu($lieuRepo->find($_POST["sortie_form"]["SortieLieu"][0]));
+            //Si date limite inscription > date debut sortie alors on renvoit vers la page et l'on indique que
+            //que la date ne peut pas être plus grande
 
-            $sortieRepo->add($sortie,true);
+            if ($sortie->getDateLimiteInscription() > $sortie->getDateHeureDebut()){
+                $this->addFlash('error', "La date d'inscription ne peut être plus grande que celle du début de l'événement");
+                return $this->redirectToRoute("app_sortie_creer");
+
+            } else {
+                //definition des valeurs par defauts de Organisateur, site, etat, sortieLieu
+                $sortie->setOrganisateur($this->getUser());
+                $sortie->setSite($siteRepo->find($this->getUser()->getSiteRatache()));
+                $sortie->setEtat($etatRepo->find(1));
+                $sortie->setSortieLieu($lieuRepo->find($request->request->get('sortie_form')['SortieLieu']['0']));
+                //$sortie->setSortieLieu($lieuRepo->find($_POST["sortie_form"]["SortieLieu"][0]));
+
+                $sortieRepo->add($sortie,true);
 
 
-            return $this->redirectToRoute('app_sortie_afficher');
+                return $this->redirectToRoute('app_sortie_afficher');
+            }
+
         }
 
         return $this->render('sortie/creerSortie.html.twig',
