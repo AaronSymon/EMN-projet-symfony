@@ -12,11 +12,18 @@
 
     <div class="registerForm offset-3 col-6 offset-3 mt-5">
         {{ form_start(editProfilForm) }}
-        {{ form_errors(editProfilForm) }}
-        {{ form_row(editProfilForm.pseudo)}}
-        {{ form_row(editProfilForm.email) }}
-        {{ form_row(editProfilForm.plainPassword)}}
 
+        {{ form_row(editProfilForm.pseudo) }}
+        {{ form_row(editProfilForm.nom) }}
+        {{ form_row(editProfilForm.prenom) }}
+        {{ form_row(editProfilForm.telephone) }}
+        {{ form_row(editProfilForm.email) }}
+        {{ form_row(editProfilForm.plainPassword) }}
+        {{ form_row(editProfilForm.photo) }}
+        {{ form_row(editProfilForm.siteratache) }}
+
+        <button class="btn btn-outline-primary mt-5 "  type="submit" >Modifier</button>
+        <button class="btn btn-outline-danger mt-5 " > Annuler</button>
         {{ form_end(editProfilForm) }}
     </div>
 

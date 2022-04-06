@@ -36,57 +36,29 @@ class MonProfilController extends AbstractController
 
     }
     /**
+     * modification  du profil d'un utilisateur connecté
      * @Route("/modifier/profil", name="app_modifier")
      */
     public function ModifierMonProfil(Request $request,UserPasswordEncoderInterface $encoder,SluggerInterface $slugger): Response
     {
         $user = new Participant();
         $user = $this->getUser();
-
-
         $form = $this->createForm(ModifierMonProfilType::class, $user);
-
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $photo = $form->get('photo')->getData();
             $em = $this->getDoctrine()->getManager();
 
-
-            if ($photo) {
-                $originalFilename = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
-                // this is needed to safely include the file name as part of the URL
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename . '-' . uniqid() . '.' . $photo->guessExtension();
-
-                $photo->move(
-                    $this->getParameter('image_directory'),
-                    $newFilename
-
-                );
-                $user->setPhoto($newFilename);
-            }
                 $newPassword = $form->get("plainPassword")['first']->getData();
-
                 // Grâce au service, on génère un nouveau hash de notre nouveau mot de passe
                 $hashOfNewPassword = $encoder->encodePassword($user, $newPassword);
-
                 // On change l'ancien mot de passe hashé par le nouveau que l'on a généré juste au dessus
                 $user->setPassword($hashOfNewPassword);
-
                 $em->flush();
-
                 $this->addFlash('success', 'Profil modifié avec succès.');
                 return $this->redirectToRoute('app_mon_profil');
             }
-
-            // Pour que la vue puisse afficher le formulaire, on doit lui envoyer le formulaire généré, avec $form->createView()
             return $this->render('mon_profil/modifierProfil.html.twig', [
                 'editProfilForm' => $form->createView()
             ]);
-
-
         }
-
-
     }

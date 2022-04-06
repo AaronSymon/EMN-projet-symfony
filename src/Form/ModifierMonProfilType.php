@@ -42,6 +42,9 @@ class ModifierMonProfilType extends AbstractType
                     ]),
                 ],
             ])
+            ->add('nom', TextType::class)
+            ->add('prenom', TextType::class)
+            ->add('telephone', NumberType::class)
             ->add('email', EmailType::class, [
                 'label' => 'Adresse Email',
                 'constraints' => [
@@ -92,26 +95,13 @@ class ModifierMonProfilType extends AbstractType
                     ])
                 ]
             ])
-            ->add('nom', TextType::class, [
-                'label' => 'nom'])
-            ->add('prenom', TextType::class, [
-                'label' => 'prenom'])
-            ->add('telephone', NumberType::class, [
-                'label' => 'nom'])
+
 
 
             ->add('siteratache',EntityType::class,[
                 'class'=>Site::class,
                 'choice_label'=>"nom"])
 
-            ->add('save', SubmitType::class, [
-                'label' => 'Enregistrer les modifications',
-                'attr' => [
-                    'class' => 'btn mt-3 cardButton col-12',
-                    'id' => 'loginBtn'
-                ]
-            ])
-            ->add('Annuler',ResetType::class)
 
 
         ;
