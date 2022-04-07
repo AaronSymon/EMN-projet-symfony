@@ -244,6 +244,10 @@ h3 {
     background-color: lightgrey;
 }
 
+#btnAnnulAdmin{
+    margin-left: 30%;
+}
+
 /* ------------- page gestion sites ------------- */
 #filterSite {
     margin-bottom: 10px;
