@@ -7,7 +7,9 @@ use App\Repository\EtatRepository;
 use App\Repository\ParticipantRepository;
 use App\Repository\SiteRepository;
 use App\Repository\SortieRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -125,6 +127,7 @@ class AccueilController extends AbstractController
     public function afficherSortie($id, SortieRepository $sortieRepo){
         $sortie = $sortieRepo->find($id);
 
+
         return $this->render('accueil/detail.html.twig', [
             "sortie"=>$sortie
         ]);
@@ -161,11 +164,14 @@ class AccueilController extends AbstractController
         $AnnulerForm = $this->createForm(AnnulerSortieType::class,$annule);
         $AnnulerForm->handleRequest($request);
 
+
         if ($AnnulerForm->isSubmitted() && $AnnulerForm->isValid()){
 
             $annule->setEtat($etatRepo->findOneBy(["libelle"=>"Annulee"]));
 
             $sortieRepo->add($annule);
+
+
 
             return $this->redirectToRoute('app_accueil');
         }
@@ -211,4 +217,7 @@ class AccueilController extends AbstractController
 
         return $this->redirectToRoute('app_accueil');
     }
+
+
+
 }

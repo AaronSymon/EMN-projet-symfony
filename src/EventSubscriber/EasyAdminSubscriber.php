@@ -4,6 +4,8 @@ namespace App\EventSubscriber;
 
 use App\Entity\BlogPost;
 use App\Entity\Participant;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityPersistedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityUpdatedEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -97,4 +99,7 @@ class EasyAdminSubscriber implements EventSubscriberInterface
         $this->entityManager->persist($entity);
         $this->entityManager->flush();
     }
+
+
+
 }

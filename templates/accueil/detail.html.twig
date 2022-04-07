@@ -4,6 +4,15 @@
 
 {% block main %}
     <h3>Details de la sortie</h3>
+
+
+
+    {% if is_granted('ROLE_ADMIN')  %}
+        <button class="btn btn-danger justify-content-around">
+
+        <a href="{{ path('app_accueil_annul',{id:sortie.id}) }}" style="color: #0a0a0a"><i class="fa-solid fa-trash-can"></i></a>
+        </button>
+    {% endif %}
     {% if sortie.etat.libelle == "Annulee" %}
         <div><label id="labelAnnulation">Motif de l'annulation :</label><span>{{ sortie.motifAnnulation }}</span></div>
     {% endif %}
