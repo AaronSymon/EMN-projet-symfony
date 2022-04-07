@@ -6,11 +6,12 @@ use App\Repository\SiteRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Internal\TentativeType;
 
 /**
  * @ORM\Entity(repositoryClass=SiteRepository::class)
  */
-class Site
+class Site implements \JsonSerializable
 {
     /**
      * @ORM\Id
@@ -122,5 +123,12 @@ class Site
     {
 
         return $this->getNom();
+    }
+
+    public function jsonSerialize()
+    {
+        return[
+            "nom"=>$this->getNom()
+        ];
     }
 }

@@ -23,5 +23,55 @@
        </tbody>
    </table>
 
+    <script>
+        function modifier(n) {
+            var sites = {{ sites|json_encode()|raw }};
+            var label = document.getElementById("labelSite"+n);
+            label.innerHTML="(ENTER to valid)";
+            let cell = document.getElementById("colNom"+n);
+            var form = document.createElement("form");
+            form.setAttribute("method", "post");
+            form.setAttribute("id", "formModif");
+            var change = document.createElement("input");
+            change.setAttribute("type", "text");
+            change.setAttribute("name", "newNom");
+            change.setAttribute("value", document.getElementById("SiteNom"+n).value);
+            var hidIn = document.createElement("input");
+            hidIn.setAttribute("type","hidden");
+            hidIn.setAttribute("name","siteNom");
+            hidIn.setAttribute("value",document.getElementById("SiteNom"+n).value);
+            cell.appendChild(form);
+            form.appendChild(change);
+            form.append(hidIn);
+            change.onkeydown = function (e) {
+                var exist=false;
+                if (e.key == 'Enter') {
+                    if(change.value == "" || change.value == null){
+                        alert("Le champ est vide!");
+                        e.preventDefault();
+                    } else {
+                        sites.every((site)=>{
+                            if(site.nom == change.value){
+                                exist=true;
+                                return false;
+                            }
+                            return true;
+                        });
+                        if(exist){
+                            alert("Site déjà existant");
+                            e.preventDefault();
+                        } else {
+                            document.getElementById('formModif').form.submit();
+                        }
+                    }
+                }
+            }
 
+            change.onkeyup = function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            document.getElementById("btnModif"+n).style.display = "none";
+        }
+    </script>
 {% endblock %}

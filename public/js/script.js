@@ -1,39 +1,3 @@
-function modifier(n) {
-    var label = document.getElementById("labelSite"+n);
-    label.innerHTML="(ENTER to valid)";
-    let cell = document.getElementById("colNom"+n);
-    var form = document.createElement("form");
-    form.setAttribute("method", "post");
-    form.setAttribute("id", "formModif");
-    var change = document.createElement("input");
-    change.setAttribute("type", "text");
-    change.setAttribute("name", "newNom");
-    change.setAttribute("value", document.getElementById("SiteNom"+n).value);
-    var hidIn = document.createElement("input");
-    hidIn.setAttribute("type","hidden");
-    hidIn.setAttribute("name","siteNom");
-    hidIn.setAttribute("value",document.getElementById("SiteNom"+n).value);
-    cell.appendChild(form);
-    form.appendChild(change);
-    form.append(hidIn);
-    change.onkeydown = function (e) {
-        if (e.key == 'Enter') {
-            if(change.value == "" || change.value == null){
-                alert("Pas de champs vide !");
-                e.preventDefault();
-            } else {
-                document.getElementById('formModif').form.submit();
-            }
-        }
-    }
-
-    change.onkeyup = function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-    }
-    document.getElementById("btnModif"+n).style.display = "none";
-}
-
 function afficher(){
     document.getElementById("btnAjout").style.display ="none";
     document.getElementById("lieuAjout").style.display ="block";
