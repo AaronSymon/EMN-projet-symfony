@@ -47,7 +47,20 @@ class MonProfilController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $photo = $form->get('photo')->getData();
+            if($photo){
+                $originalFilename = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $photo->guessExtension();
 
+                $photo->move(
+                    $this->getParameter('image_directory'),
+                    $newFilename
+
+                );
+                $user->setPhoto($newFilename);
+            }
                 $newPassword = $form->get("plainPassword")['first']->getData();
                 // Grâce au service, on génère un nouveau hash de notre nouveau mot de passe
                 $hashOfNewPassword = $encoder->encodePassword($user, $newPassword);
