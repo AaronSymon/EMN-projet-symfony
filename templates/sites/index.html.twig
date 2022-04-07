@@ -19,7 +19,7 @@
            <tr><td id="colNom{{ i }}"><label id="labelSite{{ i }}">{{ site.nom }}</label></td>
                <td><form name="formGes" method="post"> <input type="hidden" id="SiteNom{{ i }}" name="siteNom" value="{{ site.nom }}"><label class="btnGesSite" id="btnModif{{ i }}" onclick="modifier({{ i }})">Modifier</label><label class="btnGesSiteA" id="btnValid{{ i }}" onclick="valider()">Valider</label> <input type="submit" class="btnGesSite" value="Supprimer"></form></td></tr>
        {% endfor %}
-       <tr><td><form name="formAddSite" id="formAddSite" method="post"><input type="text" name="nomAdd"></form></td><td><input type="submit" id="btnGesSite" form="formAddSite" value="Ajouter"></td></tr>
+       <tr><td><form name="formAddSite" id="formAddSite" method="post"><input type="text" name="nomAdd" required></form></td><td><input type="submit" id="btnGesSite" form="formAddSite" value="Ajouter"></td></tr>
        </tbody>
    </table>
 

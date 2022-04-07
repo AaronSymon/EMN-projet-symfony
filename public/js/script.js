@@ -13,13 +13,23 @@ function modifier(n) {
     hidIn.setAttribute("type","hidden");
     hidIn.setAttribute("name","siteNom");
     hidIn.setAttribute("value",document.getElementById("SiteNom"+n).value);
-    cell.append(form);
-    form.append(change);
+    cell.appendChild(form);
+    form.appendChild(change);
     form.append(hidIn);
-    change.onkeyup = function (e) {
+    change.onkeydown = function (e) {
         if (e.key == 'Enter') {
-            document.getElementById('formModif').form.submit();
+            if(change.value == "" || change.value == null){
+                alert("Pas de champs vide !");
+                e.preventDefault();
+            } else {
+                document.getElementById('formModif').form.submit();
+            }
         }
+    }
+
+    change.onkeyup = function (e) {
+        e.preventDefault();
+        e.stopPropagation();
     }
     document.getElementById("btnModif"+n).style.display = "none";
 }
