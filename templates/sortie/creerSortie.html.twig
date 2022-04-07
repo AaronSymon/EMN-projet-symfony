@@ -12,7 +12,7 @@
         </div>
     {% endfor %}
 
-    <div id="formSortie">
+    <div id="formSortie" onload="details()">
     {{ form_start(sortieForm) }}
         <div>
             {{ form_row(sortieForm.nom) }}
@@ -32,7 +32,7 @@
             <label id="labelDetailS">Longitude</label> <span id="pLong"></span>
         </div>
         <div id="break"></div>
-        <div onload="details()">
+        <div>
             {{ form_row(sortieForm.creerSortie) }}
             {{ form_row(sortieForm.reset) }}
         </div>
@@ -43,9 +43,10 @@
     function details(){
         var select = document.getElementById("sortie_form_SortieLieu");
         var value = select.options[select.selectedIndex].value;
-        var lieux = {{ lieux|json_encode }}
+        var lieux = {{ lieux|json_encode() }};
         lieux.forEach((lieu)=>{
             if(lieu == value){
+
                 document.getElementById("pAdr").innerHTML = lieu.rue+" " + lieu.ville.codePostal +" "+ lieu.ville.nom;
             }
         })
