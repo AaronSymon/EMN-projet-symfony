@@ -75,7 +75,7 @@ table tr:nth-child(even) {
 }
 
 #LeftFilter {
-    width: 500px;
+    width: 50%;
     padding-left: 50px;
 }
 
@@ -91,20 +91,34 @@ table tr:nth-child(even) {
 #LeftFilter select {
     margin-left: 50px;
 }
+@media (min-width: 1000px){
+    #checkFilter {
+        width: 200px;
+        margin-right: 50px;
+    }
 
-#checkFilter {
-    width: 200px;
-    margin-right: 50px;
+    #BtnFiltre {
+        width: 150px;
+        height: 100px;
+    }
 }
+@media (max-width: 1000px){
+    #checkFilter {
+        width: 200px;
+    }
+
+    #BtnFiltre {
+        width: 100px;
+        height: 50px;
+    }
+}
+
 
 #checkFilter label {
     margin-left: 2px;
 }
 
-#BtnFiltre {
-    width: 150px;
-    height: 100px;
-}
+
 
 #btnCreaSortie {
     margin-top: 5px;
@@ -346,6 +360,10 @@ h3 {
 
 #formSortie > form > div {
     margin-right: 100px;
+}
+
+#formData{
+    width:300px;
 }
 
 #creaSortLieu {
