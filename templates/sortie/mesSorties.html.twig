@@ -40,8 +40,8 @@
         <td>{{ sortie.etat.libelle }}</td>
         <td>{{ sortie.SortieLieu.nom }}</td>
 
-        {# Si l'état de la sortie est différent à "Annuler, l'on fait apparaitre les boutons "Modifier" et "Annuler" #}
-        {% if (sortie.etat.libelle != "Annulee") %}
+        {# Si l'état de la sortie est différent à "Annulee", "Activité en cours" et "Passee", l'on fait apparaitre les boutons "Modifier" et "Annuler" #}
+        {% if (sortie.etat.libelle != "Annulee" and sortie.etat.libelle != "Activite en cours" and sortie.etat.libelle != "Passee") %}
             <td><a href="{{ path('app_modifier_sortie',{id:sortie.id }) }}">Modifier</a></td>
             <td><a href="{{ path('app_annuler_sortie',{id:sortie.id }) }}">Annuler</a></td>
 
@@ -50,9 +50,18 @@
             {% if (sortie.etat.libelle == "Creee") %}
                 <td><a href="{{ path('app_sortie-publication',{id:sortie.id }) }}">Publier sortie</a></td>
             {% endif %}
-        {% else %}
 
-            <td><span>sortie annulée</span></td>
+            {# Si l'état de la sortie est égale à Annulée, l'on affiche "sortie annulée" #}
+        {% elseif (sortie.etat.libelle == "Annulee") %}
+                <td><span>sortie annulée</span></td>
+
+            {# Si l'état de la sortie est égale à "Activité en cours", l'on affiche "sortie en cours" #}
+        {% elseif (sortie.etat.libelle == "Activite en cours") %}
+            <td><span>sortie en cours</span></td>
+
+            {# Si l'état de la sortie est égale à "Passee", l'on affiche "sortie terminée" #}
+        {% elseif (sortie.etat.libelle == "Passee") %}
+            <td><span>sortie terminé</span></td>
 
         {% endif %}
         </tbody>
