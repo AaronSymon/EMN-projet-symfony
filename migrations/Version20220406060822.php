@@ -20,7 +20,6 @@ final class Version20220406060822 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('DROP TABLE images');
         $this->addSql('ALTER TABLE participant ADD photo VARCHAR(255) DEFAULT NULL');
     }
 
