@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=LieuRepository::class)
  */
-class Lieu
+class Lieu implements \JsonSerializable
 {
     /**
      * @ORM\Id
@@ -147,5 +147,17 @@ class Lieu
         $this->ville = $ville;
 
         return $this;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->getId(),
+            'rue'=> $this->getRue(),
+            'latitude' => $this->getLatitude(),
+            'longitude'=> $this->getLongitude(),
+            'cp'=>$this->getVille()->getCodePostal(),
+            'ville'=>$this->getVille()->getNom()
+        ];
     }
 }
