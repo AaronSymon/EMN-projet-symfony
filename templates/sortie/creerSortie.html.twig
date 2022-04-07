@@ -12,7 +12,7 @@
         </div>
     {% endfor %}
 
-    <div id="formSortie" onload="details()">
+    <div id="formSortie">
     {{ form_start(sortieForm) }}
         <div>
             {{ form_row(sortieForm.nom) }}
@@ -26,10 +26,10 @@
             <label id="labelDetailS">Ville organisatrice</label> <span>{{ app.user.siteRatache }}</span>
 
             <div id="creaSortLieu"> {{ form_row(sortieForm.SortieLieu) }} <a href=" {{ path('app_lieux') }}"><button type="button">Ajouter un lieu</button></a></div>
-            <label id="labelDetailS">Adresse</label>
+            <label id="Detail">Adresse</label>
             <p id="pAdr"></p>
-            <label id="labelDetailS">Latitude</label> <span id="pLat"></span><br>
-            <label id="labelDetailS">Longitude</label> <span id="pLong"></span>
+            <label id="Detail">Latitude</label> <span id="pLat"></span><br>
+            <label id="Detail">Longitude</label> <span id="pLong"></span>
         </div>
         <div id="break"></div>
         <div>
@@ -43,13 +43,22 @@
     function details(){
         var select = document.getElementById("sortie_form_SortieLieu");
         var value = select.options[select.selectedIndex].value;
-        var lieux = {{ lieux|json_encode() }};
+        var lieux = {{ lieux|json_encode()|raw }};
+        console.log(lieux);
         lieux.forEach((lieu)=>{
-            if(lieu == value){
+            if(lieu.id == value){
 
-                document.getElementById("pAdr").innerHTML = lieu.rue+" " + lieu.ville.codePostal +" "+ lieu.ville.nom;
+                document.getElementById("pAdr").innerHTML = lieu.rue+" " + lieu.cp +" "+ lieu.ville;
+                document.getElementById("pLat").innerHTML = lieu.latitude;
+                document.getElementById("pLong").innerHTML = lieu.longitude;
             }
         });
     }
+
+    details();
+
+    document.getElementById("sortie_form_SortieLieu").addEventListener('change',function (){
+        details();
+    });
 </script>
 {% endblock %}
