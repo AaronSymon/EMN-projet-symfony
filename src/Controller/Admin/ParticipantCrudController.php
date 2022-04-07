@@ -4,30 +4,18 @@ namespace App\Controller\Admin;
 
 use App\Entity\Participant;
 use App\Entity\Site;
-use App\Form\RegistrationFormType;
-use App\Form\SiteType;
-use Doctrine\DBAL\Types\IntegerType;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Mapping\Id;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Menu\MenuItemTrait;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-
 use EasyCorp\Bundle\EasyAdminBundle\Form\Type\FileUploadType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Security\Core\Encoder\PasswordHasherAdapter;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 
 
 class ParticipantCrudController extends AbstractCrudController
@@ -59,13 +47,40 @@ class ParticipantCrudController extends AbstractCrudController
                 ->setRequired(false),
             AssociationField::new('siteRatache'),
             BooleanField::new('administrateur')->setDefaultColumns(0),
-            BooleanField::new('actif')->hideOnIndex(),
+            BooleanField::new('actif'),
+
         ];
     }
+    public function configureActions(Actions $actions): Actions
+    {
+        $disable = Action::new('disable', 'désactiver')->linkToCrudAction('disableUser');
 
+        return$actions
+            ->add(Crud::PAGE_INDEX, Action::DETAIL)
+            ->add(Crud::PAGE_INDEX, $disable)
+//            ->disable(Action::DELETE, Action::EDIT)
+            ;
+    }
 
+    public function disableUser(AdminContext $context)
+    {
+        $user = $context->getEntity()->getInstance();
 
+//        $user->setIsActive(false);
 
+        $em = $this->getDoctrine()->getManager();
 
+        $em->persist($user);
 
+        $em->flush();
+
+        echo'<pre>'.print_r(get_class_methods($this), true) .'</pre>';
+
+        $this->addFlash('success', 'message');
+
+        return $this->redirectToRoute('admin', [], '301');
+    }
 }
+
+
+
