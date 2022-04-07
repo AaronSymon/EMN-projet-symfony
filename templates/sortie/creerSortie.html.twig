@@ -38,16 +38,13 @@
         </div>
         {{ form_end(sortieForm) }}</div>
 
-
 <script>
     function details(){
         var select = document.getElementById("sortie_form_SortieLieu");
         var value = select.options[select.selectedIndex].value;
         var lieux = {{ lieux|json_encode()|raw }};
-        console.log(lieux);
         lieux.forEach((lieu)=>{
             if(lieu.id == value){
-
                 document.getElementById("pAdr").innerHTML = lieu.rue+" " + lieu.cp +" "+ lieu.ville;
                 document.getElementById("pLat").innerHTML = lieu.latitude;
                 document.getElementById("pLong").innerHTML = lieu.longitude;

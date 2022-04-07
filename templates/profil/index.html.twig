@@ -5,21 +5,13 @@
 {% block main %}
 <h3>{{ profil.pseudo }}</h3>
     <div class="divProfil">
-        <div id="photoProfil"><img src="" alt=""></div>
+        <div id="photoProfil"><img  class="card-img-top" src="{{ asset('uploads/'~ profil.photo) }}" alt="{{ profil.pseudo }} photo"></div>
         <div id="infoProfil">
             <label id="labelProfil">Prénom :</label><span>{{ profil.prenom }}</span><br>
             <label id="labelProfil">Nom :</label><span>{{ profil.nom }}</span><br>
             <label id="labelProfil">Téléphone :</label><span>{{ profil.telephone }}</span><br>
             <label id="labelProfil">Mail :</label><span>{{ profil.email }}</span><br>
-            <label id="labelProfil">Site :</label><span>{{ profil.siteRatache.nom }}</span><br>
-
-            <div class="card" style="width: 18rem;">
-                <img src="{{ profil.photo }}" class="card-img-top" alt="...">
-
-            </div>
-
-
-
+            <label id="labelProfil">Site :</label><span>{{ profil.siteRatache.nom }}</span>
 
         </div>
     </div>

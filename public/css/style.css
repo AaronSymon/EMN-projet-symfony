@@ -1,56 +1,50 @@
 /*ALL PAGES*/
-#infoNow{
-    text-align: right;
-    margin-right: 50px;
-    float: right;
-}
-
-h2{
+h2 {
     font-size: 25px;
     margin-left: 50px;
     margin-top: 25px;
 }
 
-#logo{
+#logo {
     height: 50px;
     width: 72px;
 }
 
-main{
-    margin-bottom:150px;
+main {
+    margin-bottom: 150px;
 }
 
-table tr:nth-child(even){
+table tr:nth-child(even) {
     background-color: #E8E8E8;
 }
 
-#foot{
-    position:fixed;
+#foot {
+    position: fixed;
     bottom: 0;
     width: 100%;
     background-color: black;
-    color : white;
+    color: white;
     display: flex;
     flex-wrap: wrap;
 }
 
-#contact{
+#contact {
     display: flex;
     width: 15%;
     align-items: center;
     justify-content: center;
 }
 
-#contact h5{
+#contact h5 {
     font-size: 25px;
 }
 
-#contact-info li{
+#contact-info li {
     list-style: none;
     width: 85%;
 }
 
-#copy{
+#copy {
     background-color: rgba(0, 0, 0, 0.2);
     text-align: center;
     width: 100%;
@@ -58,186 +52,191 @@ table tr:nth-child(even){
 }
 
 /* ------------- Page Accueil ------------- */
+#infoNow {
+    text-align: right;
+    margin-right: 50px;
+    float: right;
+}
 
-#filtreDiv{
+#filtreDiv {
     margin-bottom: 50px;
 }
 
-#filtreDiv form{
+#filtreDiv form {
     display: flex;
 }
-#checkFilter{
+
+#checkFilter {
     display: block;
 }
 
-#listFiltre{
+#listFiltre {
     list-style: none;
 }
 
-#LeftFilter{
+#LeftFilter {
     width: 500px;
     padding-left: 50px;
 }
 
-#LeftFilter div{
+#LeftFilter div {
     margin-bottom: 5px;
 }
 
-#LeftFilter input[type=search]{
+#LeftFilter input[type=search] {
     border-radius: 10px;
     padding-left: 10px;
 }
 
-#LeftFilter select{
+#LeftFilter select {
     margin-left: 50px;
 }
 
-#checkFilter{
+#checkFilter {
     width: 200px;
     margin-right: 50px;
 }
 
-#checkFilter label{
+#checkFilter label {
     margin-left: 2px;
 }
 
-#BtnFiltre{
+#BtnFiltre {
     width: 150px;
     height: 100px;
 }
 
-#btnCreaSortie{
+#btnCreaSortie {
     margin-top: 5px;
     margin-left: 100px;
     height: 50px;
 }
 
-.tableSortie{
-    margin:auto;
+.tableSortie {
+    margin: auto;
     width: 90%;
     border: 2px black solid;
     overflow: auto;
     max-height: 400px;
 }
 
-.tableSortie td{
+.tableSortie td {
     border-right: solid black 2px;
     padding-left: 2px;
 }
 
-.tableSortie th{
+.tableSortie th {
     border-right: solid black 2px;
     padding-left: 5px;
     background-color: lightgrey;
 }
 
-.tableSortie a{
+.tableSortie a {
     text-decoration: none;
 }
 
 /* ------------- page Profil ------------- */
-h3{
+h3 {
     margin: 50px 300px;
     font-size: 35px;
 }
 
-.divProfil{
+.divProfil {
     display: flex;
 }
 
-#photoProfil{
+#photoProfil {
     width: 200px;
     height: 200px;
 }
 
-#infoProfil{
+#infoProfil {
     margin-bottom: 20px;
 }
 
-#labelDetailS{
+#labelDetailS {
     width: 100px;
     margin-bottom: 20px;
 }
 
-#RetourProfil{
+#RetourProfil {
     display: block;
     margin-left: 300px;
     width: 50px;
 }
 
 /* ------------- page detail sortie ------------- */
-#divSortie{
+#divSortie {
     display: flex;
     flex-wrap: wrap;
     margin-left: 150px;
 }
 
-#infoSupSortie{
+#infoSupSortie {
     margin-left: 50px;
     margin-bottom: 50px;
 }
 
-#labelDetailS, #labelAnnulation{
+#labelDetailS, #labelAnnulation {
     width: 200px;
     font-weight: bold;
     margin-bottom: 20px;
 }
 
-#labelAnnulation{
+#labelAnnulation {
     width: 250px;
     margin-left: 300px;
     font-size: 20px;
 }
 
-#labelSupDetailS{
+#labelSupDetailS {
     width: 50px;
     font-weight: bold;
     margin-bottom: 20px;
 }
 
-#Detail{
+#Detail {
     width: 100px;
     font-weight: bold;
 }
 
-#DetailP{
+#DetailP {
     font-weight: bold;
 }
 
-#break{
+#break {
     width: 100%;
 }
 
-#listeParticipant{
+#listeParticipant {
     display: block;
 }
 
-.tablePSortie{
+.tablePSortie {
     width: 200px;
     border: 2px black solid;
     overflow: auto;
     max-height: 300px;
 }
 
-.tablePSortie td{
+.tablePSortie td {
     border-right: solid black 2px;
     padding-left: 2px;
 }
 
-.tablePSortie th{
+.tablePSortie th {
     border-right: solid black 2px;
     padding-left: 5px;
     background-color: lightgrey;
 }
 
 /* ------------- page gestion sites ------------- */
-
-#filterSite{
+#filterSite {
     margin-bottom: 10px;
     margin-left: 15%;
 }
 
-.btnGesSite, .btnGesSiteA, #btnAjoutVille{
+.btnGesSite, .btnGesSiteA, #btnAjoutVille {
     border: none;
     outline: none;
     background: none;
@@ -248,11 +247,11 @@ h3{
     font-size: inherit;
 }
 
-.btnGesSiteA{
+.btnGesSiteA {
     display: none;
 }
 
-.tableAdmin{
+.tableAdmin {
     margin-left: 15%;
     border: solid black 2px;
     width: 40%;
@@ -260,24 +259,23 @@ h3{
     max-height: 400px;
 }
 
-.tableAdmin td{
+.tableAdmin td {
     border-right: solid black 2px;
     padding-left: 2px;
 }
 
-.tableAdmin th{
+.tableAdmin th {
     border-right: solid black 2px;
     padding-left: 5px;
     background-color: lightgrey;
 }
 
-.tableAdmin a{
+.tableAdmin a {
     text-decoration: none;
 }
 
 /* ------------- Page gestion Lieu ------------- */
-
-.tableLieu{
+.tableLieu {
     margin-left: 15%;
     border: solid black 2px;
     width: 50%;
@@ -285,73 +283,71 @@ h3{
     max-height: 400px;
 }
 
-.tableLieu td{
+.tableLieu td {
     border-right: solid black 2px;
     padding-left: 2px;
 }
 
-.tableLieu th{
+.tableLieu th {
     border-right: solid black 2px;
     padding-left: 5px;
     background-color: lightgrey;
 }
 
-.tableLieu a{
+.tableLieu a {
     text-decoration: none;
 }
 
-#lieuAjout{
+#lieuAjout {
     margin-top: 20px;
     margin-left: 15%;
     display: none;
 }
 
-#formAjoutLieu input[type=submit]{
+#formAjoutLieu input[type=submit] {
     margin-right: 30px;
 }
 
-#formAjoutLieu div{
+#formAjoutLieu div {
     margin-bottom: 10px;
 }
 
-#btnAjout{
+#btnAjout {
     margin-top: 20px;
     margin-left: 15%;
 }
 
-#lbLieu{
+#lbLieu {
     width: 100px;
 }
 
-#divCreaVille{
+#divCreaVille {
     display: none;
 }
 
-#error{
+#error {
     color: red;
     margin-left: 15%;
 }
 
 /* ------------- Affichage Profil ------------- */
-
-#labelProfil{
+#labelProfil {
     font-weight: bold;
     margin-bottom: 10px;
     width: 100px;
 }
 
 /* ------------- Page Création Sortie ------------- */
-
-#formSortie > form{
+#formSortie > form {
     display: flex;
     flex-wrap: wrap;
     margin-left: 150px;
 }
 
-#formSortie > form > div{
+#formSortie > form > div {
     margin-right: 100px;
 }
 
-#creaSortLieu{
+#creaSortLieu {
     margin-bottom: 50px;
 }
